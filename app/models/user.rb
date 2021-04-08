@@ -3,8 +3,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[google_oauth2]
 
-  has_many :game_users
-  has_many :games, through: :game_users
+  has_many :players
+  has_many :games, through: :players
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

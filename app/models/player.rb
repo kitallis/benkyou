@@ -1,4 +1,4 @@
-class GameUser < ApplicationRecord
+class Player < ApplicationRecord
   class InvalidStatusChange < StandardError; end
 
   has_many :answers

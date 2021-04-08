@@ -2,9 +2,9 @@ class Game < ApplicationRecord
   class InvalidStatusChange < StandardError; end
 
   has_many :game_decks
-  has_many :game_users
+  has_many :players
   has_many :decks, through: :game_decks
-  has_many :users, through: :game_users
+  has_many :users, through: :players
 
   enum status: {
     created: 'created',
@@ -25,7 +25,7 @@ class Game < ApplicationRecord
   end
 
   def add_player!(player)
-    game_users.create!(user: player)
+    players.create!(user: player)
   end
 
   # This won't run into a race condition since the Game can go from 'playing' to 'playing'
@@ -34,7 +34,7 @@ class Game < ApplicationRecord
     raise InvalidStatusChange unless created? || playing?
 
     transaction do
-      game_users.where(user: for_player).first.play!
+      players.where(user: for_player).first.play!
       update!(status: :playing)
     end
   end
@@ -43,8 +43,8 @@ class Game < ApplicationRecord
     raise InvalidStatusChange unless stopped? || playing?
 
     transaction do
-      game_users.where(user: for_player).first.stop!
-      update!(status: :stopped) if game_users.all?(&:stopped?)
+      players.where(user: for_player).first.stop!
+      update!(status: :stopped) if players.all?(&:stopped?)
     end
   end
 

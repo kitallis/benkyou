@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_132539) do
+ActiveRecord::Schema.define(version: 2021_04_08_153823) do
 
   create_table "answers", force: :cascade do |t|
     t.string "attempt"
     t.boolean "correct"
     t.integer "card_id", null: false
-    t.integer "game_user_id", null: false
+    t.integer "player_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["card_id"], name: "index_answers_on_card_id"
-    t.index ["game_user_id"], name: "index_answers_on_game_user_id"
+    t.index ["player_id"], name: "index_answers_on_player_id"
   end
 
   create_table "cards", force: :cascade do |t|
@@ -49,23 +49,23 @@ ActiveRecord::Schema.define(version: 2021_04_07_132539) do
     t.index ["game_id"], name: "index_game_decks_on_game_id"
   end
 
-  create_table "game_users", force: :cascade do |t|
-    t.datetime "started_at"
-    t.string "status", null: false
-    t.integer "game_id", null: false
-    t.integer "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_game_users_on_game_id"
-    t.index ["user_id"], name: "index_game_users_on_user_id"
-  end
-
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.string "status"
     t.bigint "length"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.datetime "started_at"
+    t.string "status", null: false
+    t.integer "game_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["user_id"], name: "index_players_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,10 +99,10 @@ ActiveRecord::Schema.define(version: 2021_04_07_132539) do
   end
 
   add_foreign_key "answers", "cards"
-  add_foreign_key "answers", "game_users"
+  add_foreign_key "answers", "players"
   add_foreign_key "cards", "decks"
   add_foreign_key "game_decks", "decks"
   add_foreign_key "game_decks", "games"
-  add_foreign_key "game_users", "games"
-  add_foreign_key "game_users", "users"
+  add_foreign_key "players", "games"
+  add_foreign_key "players", "users"
 end

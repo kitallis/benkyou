@@ -15,7 +15,7 @@ users = if User.all.blank?
 
 # destroy existing non-user data
 GameDeck.delete_all
-GameUser.delete_all
+Player.delete_all
 Card.delete_all
 Deck.delete_all
 Game.delete_all
@@ -49,7 +49,7 @@ game_names.each do |name|
   game = Game.create!(name: name, status: Game.statuses.values.sample, length: 5000)
 
   users.each do |user|
-    GameUser.create!(game: game, user: user, status: GameUser.statuses.values.sample)
+    Player.create!(game: game, user: user, status: Player.statuses.values.sample)
   end
 
   decks.each do |deck|

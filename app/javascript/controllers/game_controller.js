@@ -18,6 +18,10 @@ export default class extends Controller {
     );
   }
 
+  save() {
+
+  }
+
   _connected() {}
 
   _disconnected() {}

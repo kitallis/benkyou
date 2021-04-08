@@ -1,6 +1,6 @@
 class Answer < ApplicationRecord
   belongs_to :card
-  belongs_to :game_user
+  belongs_to :player
 
   validate :game_has_started?, on: :update
 

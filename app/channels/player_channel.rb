@@ -1,4 +1,4 @@
-class GameChannel < ApplicationCable::Channel
+class PlayerChannel < ApplicationCable::Channel
   periodically :transmit_remaining_time, every: 1.second
 
   def subscribed

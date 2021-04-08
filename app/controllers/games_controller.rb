@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_game, only: %i[show play start]
-  before_action :set_game_user, only: %i[show play]
+  before_action :set_player, only: %i[show play]
 
   def index
     @games = Game.all
@@ -45,8 +45,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
   end
 
-  def set_game_user
-    @game_user = GameUser.where(game: @game, user: current_user).first
+  def set_player
+    @game_user = Player.where(game: @game, user: current_user).first
   end
 
   def game_params
