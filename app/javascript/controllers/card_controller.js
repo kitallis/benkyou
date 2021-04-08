@@ -6,15 +6,15 @@ export default class extends Controller {
   static values = {index: Number}
 
   connect() {
-    this.subscription = consumer.subscriptions.create(
+    this.playerSubscription = consumer.subscriptions.create(
       {
         channel: "PlayerChannel",
         id: this.data.get("playerid"),
       },
       {
         connected: this._connected.bind(this),
-        disconnected: this._disconnected.bind(this),
         received: this._received.bind(this),
+        disconnected: this._disconnected.bind(this),
       }
     );
   }
@@ -48,7 +48,7 @@ export default class extends Controller {
   }
 
   updateAnswer() {
-    this.subscription.send({answers: [this.state_for(this.previousCard)]})
+    this.playerSubscription.send({answers: [this.state_for(this.previousCard)]})
   }
 
   indexValueChanged() {

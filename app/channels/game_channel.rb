@@ -4,8 +4,7 @@ class GameChannel < ApplicationCable::Channel
   def subscribed
     player = player(game)
 
-    return reject unless game.present?
-    return reject unless player.present?
+    return reject if game.blank? || player.blank?
     return reject if player.time_left < 1
 
     stream_for game
@@ -16,10 +15,8 @@ class GameChannel < ApplicationCable::Channel
   def transmit_remaining_time
     player = player(game)
 
-    return unless game.present?
-    return unless game.playing?
-    return unless player.present?
-    return unless player.playing?
+    return if game.blank? || !game.playing?
+    return if player.blank? || !player.playing?
 
     time_left = player.time_left
     transmit({ time_left: "#{time_left}s remaining" })
