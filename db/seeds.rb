@@ -46,7 +46,7 @@ end
 # create games
 game_names = ['kit v nid', 'pree v gin']
 game_names.each do |name|
-  game = Game.create!(name: name, status: Game.statuses.values.sample, length: nil)
+  game = Game.create!(name: name, status: Game.statuses.values.sample, length: 5000)
 
   users.each do |user|
     GameUser.create!(game: game, user: user, status: GameUser.statuses.values.sample)
