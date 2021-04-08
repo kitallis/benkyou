@@ -12,10 +12,6 @@ class GamesController < ApplicationController
     @questions = @game.questions
   end
 
-  def update
-
-  end
-
   def new
     @game = Game.new
   end
@@ -46,7 +42,7 @@ class GamesController < ApplicationController
   end
 
   def set_player
-    @game_user = Player.where(game: @game, user: current_user).first
+    @player = Player.where(game: @game, user: current_user).first
   end
 
   def game_params

@@ -18,20 +18,18 @@ export default class extends Controller {
     );
   }
 
-  save() {
+  _received(data) {
+    const element = this.timeLeftTarget
+
+    if (parseInt(data.time_left) === 0) {
+      alert("Game has ended!")
+      this.subscription.unsubscribe();
+    }
+
+    element.innerHTML = data.time_left
 
   }
 
   _connected() {}
-
   _disconnected() {}
-
-  _received(data) {
-    const element = this.timeLeftTarget
-    element.innerHTML = data.time_left
-  }
-
-  getChild(target, name) {
-    return this.application.getControllerForElementAndIdentifier(target, name)
-  }
 }

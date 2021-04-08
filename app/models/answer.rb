@@ -7,11 +7,11 @@ class Answer < ApplicationRecord
   scope :correct, -> { where(correct: true) }
 
   def correct?(card, attempt)
-    deck = game_user.game.decks.find(card.deck)
+    deck = player.game.decks.find(card.deck)
     attempt == (deck.inverted? ? card.back : card.front)
   end
 
   def game_has_started?
-    game_user.game.active?
+    player.game.active?
   end
 end

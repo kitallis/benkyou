@@ -1,41 +1,31 @@
 class PlayerChannel < ApplicationCable::Channel
-  periodically :transmit_remaining_time, every: 1.second
-
   def subscribed
-    game = game(params[:id])
-    player = player(game)
-
-    return reject unless game.present?
-    return reject unless player.present?
-    return reject if player.time_left < 1
-
-    stream_for game
+    stream_for player
   end
 
-  def unsubscribed; end
-
-  def transmit_remaining_time
-    game = game(params[:id])
-    player = player(game)
-
-    return unless game.present?
-    return unless game.playing?
-    return unless player.present?
-    return unless player.playing?
-
-    time_left = player.time_left
-    transmit({ time_left: "#{time_left}s remaining" })
-    return unless time_left < 1
-
-    game.stop!(for_player: current_user)
-    transmit({ time_left: 0 }) if time_left < 1
+  def unsubscribed
   end
 
-  def game(id)
-    Game.find(id)
+  def receive(data)
+    data['answers'].each do |answer|
+      card_id = answer['cardId'].to_i
+      attempt = answer['value']
+
+      answer = player.answers.find_by(card: card(card_id))
+
+      if answer.present?
+        answer.update!(attempt: attempt)
+      else
+        player.answers.create!(card: card(card_id), attempt: attempt)
+      end
+    end
   end
 
-  def player(game)
-    Player.where(game: game, user: current_user).first
+  def card(id)
+    Card.find(id)
+  end
+
+  def player
+    Player.find(params[:id])
   end
 end
