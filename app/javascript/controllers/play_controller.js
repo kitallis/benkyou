@@ -1,12 +1,11 @@
-import {Controller} from "stimulus"
+import { Controller } from "stimulus";
 import consumer from "channels/consumer";
 
 export default class extends Controller {
-  static targets = ["playCard"]
-  static values = {index: Number}
+  static targets = ["timeLeft"];
 
   connect() {
-    this.playSubscription = consumer.subscriptions.create(
+    this.channel = consumer.subscriptions.create(
       {
         channel: "PlayChannel",
         id: this.data.get("id"),
@@ -19,78 +18,42 @@ export default class extends Controller {
     );
   }
 
+  initialize() {
+    console.log("INITd game")
+
+    // https://dev.to/leastbad/the-best-one-line-stimulus-power-move-2o90
+    this.element[this.identifier] = this
+  }
+
+  _received(data) {
+    this.updateTimeLeft(data)
+    this.checkPlayStatus(data)
+  }
+
   _connected() {}
-  _received(data) {}
   _disconnected() {}
 
-  initialize() {
-    console.log("INITd play")
-    // this.removePlayerSubscriptionHandler();
-  }
-
-  next() {
-    this.previousIndex = this.indexValue
-
-    this.updateAnswer()
-
-    if (this.indexValue === this.totalCards()) {
-      this.indexValue = this.totalCards()
-    } else {
-      this.indexValue++
+  checkPlayStatus(data) {
+    if (this.has_play_ended(data)) {
+      alert("Game has ended!")
+      this.unsubscribe()
     }
   }
 
-  previous() {
-    this.previousIndex = this.indexValue
-
-    this.updateAnswer()
-
-    if (this.indexValue === 0) {
-      this.indexValue = 0
-    } else {
-      this.indexValue--
-    }
+  updateTimeLeft(data) {
+    const element = this.timeLeftTarget
+    element.innerHTML = data.time_left
   }
 
-  updateAnswer() {
-    this.playSubscription.send({answers: [this.stateFor(this.previousCard)]})
+  has_play_ended(data) {
+    return parseInt(data.time_left) === 0
   }
 
-  indexValueChanged() {
-    this.hideAllCards()
-    this.currentCard.hidden = false
+  get subscription() {
+    return this.channel
   }
 
-  hideAllCards() {
-    this.playCardTargets.forEach(element => element.hidden = true)
-  }
-
-  totalCards() {
-    return this.playCardTargets.length - 1
-  }
-
-  get currentCard() {
-    return this.playCardTargets[this.indexValue]
-  }
-
-  get previousCard() {
-    return this.playCardTargets[this.previousIndex]
-  }
-
-  state() {
-    return this.playCardTargets.map(playCard => this.stateFor(playCard))
-  }
-
-  stateFor(playCard) {
-    return {
-      cardId: playCard.dataset.cardId,
-      value: playCard.querySelector(".input").value
-    }
-  }
-
-  removePlayerSubscriptionHandler() {
-    this.addEventListener("remove-play-subscription", (e) => {
-      this.playSubscription.unsubscribe();
-    });
+  unsubscribe() {
+    this.channel.unsubscribe()
   }
 }

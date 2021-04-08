@@ -9,10 +9,10 @@ class PlaysController < ApplicationController
   private
 
   def set_play
-    @play = Play.find(params[:id])
+    @play = Play.find_by!(id: params[:id], user: current_user)
   end
 
   def set_game
-    @game = Game.find(params[:game_id])
+    @game = @play.game
   end
 end

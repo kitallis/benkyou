@@ -8,19 +8,19 @@
 <% if @game.stopped? %>
   <strong>(GAME IS FINISHED)</strong>
 <% else %>
-  <div data-controller="game" data-game-id="<%= @game.id %>">
-    <div data-game-target="timeLeft">
+  <div id="play" data-controller="play" data-play-id="<%= @play.id %>">
+    <div data-play-target="timeLeft">
       N/A
     </div>
 
     <strong>(started)</strong>
 
-    <div data-controller="play" data-play-id="<%= @play.id %>" data-play-index-value="1">
-      <button data-action="play#previous">←</button>
-      <button data-action="play#next">→</button>
+    <div data-controller="card" data-play-index-value="1">
+      <button data-action="card#previous">←</button>
+      <button data-action="card#next">→</button>
 
       <% @questions.each do |question| %>
-        <div data-play-target="playCard" data-card-id="<%= card(question).id %>">
+        <div data-card-target="card" data-card-id="<%= card(question).id %>">
           <div class="field">
             <label class="label"><%= question(question) %></label>
             <div class="control">
