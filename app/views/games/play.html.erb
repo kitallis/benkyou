@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @game.name %>
+</p>
+
+<% if @game.stopped? %>
+  <strong>(GAME IS FINISHED)</strong>
+<% else %>
+  <div data-controller="game" data-game-id="<%= @game.id %>">
+    <div data-target="game.status">
+      N/A
+    </div>
+  </div>
+
+  <strong>(started)</strong>
+<% end %>

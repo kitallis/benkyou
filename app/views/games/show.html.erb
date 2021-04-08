@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @game.name %>
+</p>
+
+<% if @game.playing? %>
+  <strong>(started)</strong>
+<% end %>
+
+
+<% if @game.created? %>
+  <%= link_to 'Start', start_game_path(@game), class: "button is-primary", method: :post %>
+<% end %>
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>
