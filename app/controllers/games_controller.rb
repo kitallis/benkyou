@@ -1,16 +1,12 @@
 class GamesController < ApplicationController
   before_action :set_game, only: %i[show play start]
-  before_action :set_player, only: %i[show play]
+  before_action :set_play, only: %i[show play]
 
   def index
     @games = Game.all
   end
 
   def show; end
-
-  def play
-    @questions = @game.questions
-  end
 
   def new
     @game = Game.new
@@ -32,7 +28,7 @@ class GamesController < ApplicationController
 
   def start
     @game.start!(for_player: current_user)
-    redirect_to play_game_path
+    redirect_to game_play_path(@game, current_user.plays.where(game: @game))
   end
 
   private
@@ -41,8 +37,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
   end
 
-  def set_player
-    @player = Player.where(game: @game, user: current_user).first
+  def set_play
+    @play = Play.where(game: @game, user: current_user).first
   end
 
   def game_params

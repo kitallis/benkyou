@@ -1,6 +1,7 @@
-class PlayerChannel < ApplicationCable::Channel
+class PlayChannel < ApplicationCable::Channel
   def subscribed
-    stream_for player
+    return reject if play.stopped?
+    stream_for play
   end
 
   def unsubscribed
@@ -11,12 +12,12 @@ class PlayerChannel < ApplicationCable::Channel
       card_id = answer['cardId'].to_i
       attempt = answer['value']
 
-      answer = player.answers.find_by(card: card(card_id))
+      answer = play.answers.find_by(card: card(card_id))
 
       if answer.present?
         answer.update!(attempt: attempt)
       else
-        player.answers.create!(card: card(card_id), attempt: attempt)
+        play.answers.create!(card: card(card_id), attempt: attempt)
       end
     end
   end
@@ -25,7 +26,7 @@ class PlayerChannel < ApplicationCable::Channel
     Card.find(id)
   end
 
-  def player
-    Player.find(params[:id])
+  def play
+    Play.find(params[:id])
   end
 end

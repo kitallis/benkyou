@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :answers
   resources :games do
+    resources :plays
     member do
-      get :play
       post :start
     end
   end

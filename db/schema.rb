@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 2021_04_08_153823) do
     t.string "attempt"
     t.boolean "correct"
     t.integer "card_id", null: false
-    t.integer "player_id", null: false
+    t.integer "play_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["card_id"], name: "index_answers_on_card_id"
-    t.index ["player_id"], name: "index_answers_on_player_id"
+    t.index ["play_id"], name: "index_answers_on_play_id"
   end
 
   create_table "cards", force: :cascade do |t|
@@ -57,15 +57,15 @@ ActiveRecord::Schema.define(version: 2021_04_08_153823) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "players", force: :cascade do |t|
+  create_table "plays", force: :cascade do |t|
     t.datetime "started_at"
     t.string "status", null: false
     t.integer "game_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_players_on_game_id"
-    t.index ["user_id"], name: "index_players_on_user_id"
+    t.index ["game_id"], name: "index_plays_on_game_id"
+    t.index ["user_id"], name: "index_plays_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,10 +99,10 @@ ActiveRecord::Schema.define(version: 2021_04_08_153823) do
   end
 
   add_foreign_key "answers", "cards"
-  add_foreign_key "answers", "players"
+  add_foreign_key "answers", "plays"
   add_foreign_key "cards", "decks"
   add_foreign_key "game_decks", "decks"
   add_foreign_key "game_decks", "games"
-  add_foreign_key "players", "games"
-  add_foreign_key "players", "users"
+  add_foreign_key "plays", "games"
+  add_foreign_key "plays", "users"
 end

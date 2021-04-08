@@ -2,9 +2,10 @@ class Game < ApplicationRecord
   class InvalidStatusChange < StandardError; end
 
   has_many :game_decks
-  has_many :players
+  has_many :plays
   has_many :decks, through: :game_decks
-  has_many :users, through: :players
+  has_many :cards, through: :decks
+  has_many :users, through: :plays
 
   enum status: {
     created: 'created',
@@ -25,7 +26,7 @@ class Game < ApplicationRecord
   end
 
   def add_player!(player)
-    players.create!(user: player)
+    plays.create!(user: player)
   end
 
   # This won't run into a race condition since the Game can go from 'playing' to 'playing'
@@ -34,7 +35,7 @@ class Game < ApplicationRecord
     raise InvalidStatusChange unless created? || playing?
 
     transaction do
-      players.where(user: for_player).first.play!
+      plays.where(user: for_player).first.play!
       update!(status: :playing)
     end
   end
@@ -43,16 +44,8 @@ class Game < ApplicationRecord
     raise InvalidStatusChange unless stopped? || playing?
 
     transaction do
-      players.where(user: for_player).first.stop!
-      update!(status: :stopped) if players.all?(&:stopped?)
+      plays.where(user: for_player).first.stop!
+      update!(status: :stopped) if plays.all?(&:stopped?)
     end
-  end
-
-  def questions
-    game_decks.flat_map do |game_deck|
-      game_deck.cards.map do |card|
-        [card.id, game_deck.inverted? ? card.back : card.front]
-      end
-    end.shuffle
   end
 end

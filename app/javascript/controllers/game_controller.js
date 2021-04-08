@@ -18,6 +18,11 @@ export default class extends Controller {
     );
   }
 
+  initialize() {
+    console.log("INITd game")
+    // this.removePlayerSubscriptionHandler();
+  }
+
   _received(data) {
     this.updateTimeLeft(data)
     this.checkPlayStatus(data)

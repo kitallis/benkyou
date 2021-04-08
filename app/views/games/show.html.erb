@@ -14,11 +14,11 @@
 <% end %>
 
 
-<% if !@game.stopped? && @player.ready? %>
+<% if !@game.stopped? && @play.ready? %>
   <%= link_to 'Start', start_game_path(@game), class: "button is-primary", method: :post %>
 <% end %>
-<% if @game.playing? && @player.playing? %>
-  <%= link_to 'Continue playing', play_game_path(@game) %> |
+<% if @game.playing? && @play.playing? %>
+  <%= link_to 'Continue playing', game_play_path(@game, @play.id) %> |
 <% end %>
 
 <%= link_to 'Edit', edit_game_path(@game) %> |

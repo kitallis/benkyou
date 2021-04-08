@@ -1,17 +1,18 @@
 class Answer < ApplicationRecord
+  belongs_to :play
   belongs_to :card
-  belongs_to :player
 
   validate :game_has_started?, on: :update
 
   scope :correct, -> { where(correct: true) }
 
-  def correct?(card, attempt)
-    deck = player.game.decks.find(card.deck)
-    attempt == (deck.inverted? ? card.back : card.front)
-  end
+  delegate :game, to: :play
 
   def game_has_started?
-    player.game.active?
+    game.playing?
+  end
+
+  def correct?(attempt)
+    card.back == attempt
   end
 end

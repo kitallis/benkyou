@@ -2,14 +2,14 @@ import {Controller} from "stimulus"
 import consumer from "channels/consumer";
 
 export default class extends Controller {
-  static targets = ["card"]
+  static targets = ["playCard"]
   static values = {index: Number}
 
   connect() {
-    this.playerSubscription = consumer.subscriptions.create(
+    this.playSubscription = consumer.subscriptions.create(
       {
-        channel: "PlayerChannel",
-        id: this.data.get("playerid"),
+        channel: "PlayChannel",
+        id: this.data.get("id"),
       },
       {
         connected: this._connected.bind(this),
@@ -22,6 +22,11 @@ export default class extends Controller {
   _connected() {}
   _received(data) {}
   _disconnected() {}
+
+  initialize() {
+    console.log("INITd play")
+    // this.removePlayerSubscriptionHandler();
+  }
 
   next() {
     this.previousIndex = this.indexValue
@@ -48,7 +53,7 @@ export default class extends Controller {
   }
 
   updateAnswer() {
-    this.playerSubscription.send({answers: [this.state_for(this.previousCard)]})
+    this.playSubscription.send({answers: [this.stateFor(this.previousCard)]})
   }
 
   indexValueChanged() {
@@ -57,29 +62,35 @@ export default class extends Controller {
   }
 
   hideAllCards() {
-    this.cardTargets.forEach(element => element.hidden = true)
+    this.playCardTargets.forEach(element => element.hidden = true)
   }
 
   totalCards() {
-    return this.cardTargets.length - 1
+    return this.playCardTargets.length - 1
   }
 
   get currentCard() {
-    return this.cardTargets[this.indexValue]
+    return this.playCardTargets[this.indexValue]
   }
 
   get previousCard() {
-    return this.cardTargets[this.previousIndex]
+    return this.playCardTargets[this.previousIndex]
   }
 
   state() {
-    return this.cardTargets.map(card => this.state_for(card))
+    return this.playCardTargets.map(playCard => this.stateFor(playCard))
   }
 
-  state_for(card) {
+  stateFor(playCard) {
     return {
-      cardId: card.dataset.cardId,
-      value: card.querySelector(".input").value
+      cardId: playCard.dataset.cardId,
+      value: playCard.querySelector(".input").value
     }
+  }
+
+  removePlayerSubscriptionHandler() {
+    this.addEventListener("remove-play-subscription", (e) => {
+      this.playSubscription.unsubscribe();
+    });
   }
 }

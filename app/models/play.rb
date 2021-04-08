@@ -1,9 +1,10 @@
-class Player < ApplicationRecord
+class Play < ApplicationRecord
   class InvalidStatusChange < StandardError; end
 
-  has_many :answers
   belongs_to :game
   belongs_to :user
+
+  has_many :answers
 
   enum status: {
     ready: 'ready',
@@ -13,6 +14,21 @@ class Player < ApplicationRecord
 
   before_create do
     self.status = :ready
+  end
+
+  delegate :cards, to: :game
+
+  def questions
+    attempted_answers = answers.includes(:card).where(card: cards)
+    result = cards.map do |card|
+      {
+        card: card,
+        attempted_answer: attempted_answers.find { |a| a.card == card }
+      }
+    end
+
+    # questions for a play should be repeatably shuffled
+    result.sort_by { id }
   end
 
   def score

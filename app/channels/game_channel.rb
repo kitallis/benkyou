@@ -2,10 +2,10 @@ class GameChannel < ApplicationCable::Channel
   periodically :transmit_remaining_time, every: 1.second
 
   def subscribed
-    player = player(game)
+    play = play(game)
 
-    return reject if game.blank? || player.blank?
-    return reject if player.time_left < 1
+    return reject if game.blank? || play.blank?
+    return reject if play.time_left < 1
 
     stream_for game
   end
@@ -13,12 +13,12 @@ class GameChannel < ApplicationCable::Channel
   def unsubscribed; end
 
   def transmit_remaining_time
-    player = player(game)
+    play = play(game)
 
     return if game.blank? || !game.playing?
-    return if player.blank? || !player.playing?
+    return if play.blank? || !play.playing?
 
-    time_left = player.time_left
+    time_left = play.time_left
     transmit({ time_left: "#{time_left}s remaining" })
     return unless time_left < 1
 
@@ -30,7 +30,7 @@ class GameChannel < ApplicationCable::Channel
     Game.find(params[:id])
   end
 
-  def player(game)
-    Player.where(game: game, user: current_user).first
+  def play(game)
+    Play.where(game: game, user: current_user).first
   end
 end
