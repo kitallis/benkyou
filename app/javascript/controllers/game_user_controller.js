@@ -2,12 +2,12 @@ import { Controller } from "stimulus";
 import consumer from "channels/consumer";
 
 export default class extends Controller {
-  static targets = ["timeLeft"];
+  static targets = ["status"];
 
   connect() {
     this.subscription = consumer.subscriptions.create(
       {
-        channel: "GameChannel",
+        channel: "GameUserChannel",
         id: this.data.get("id"),
       },
       {
@@ -18,16 +18,13 @@ export default class extends Controller {
     );
   }
 
+  save(data) {
+    console.log("PING")
+  }
+
   _connected() {}
 
   _disconnected() {}
 
-  _received(data) {
-    const element = this.timeLeftTarget
-    element.innerHTML = data.time_left
-  }
-
-  getChild(target, name) {
-    return this.application.getControllerForElementAndIdentifier(target, name)
-  }
+  _received(data) {}
 }

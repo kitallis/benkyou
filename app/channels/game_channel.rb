@@ -28,7 +28,7 @@ class GameChannel < ApplicationCable::Channel
     return unless time_left < 1
 
     game.stop!(for_player: current_user)
-    transmit({ time_left: 'TIME IS UP' })
+    transmit({ time_left: 0 }) if time_left < 1
   end
 
   def game(id)

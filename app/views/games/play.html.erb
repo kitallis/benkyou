@@ -9,10 +9,26 @@
   <strong>(GAME IS FINISHED)</strong>
 <% else %>
   <div data-controller="game" data-game-id="<%= @game.id %>">
-    <div data-target="game.status">
+    <div data-game-target="timeLeft">
       N/A
     </div>
-  </div>
 
-  <strong>(started)</strong>
+    <strong>(started)</strong>
+
+    <div data-controller="card" data-card-index-value="1">
+      <button data-action="card#previous">←</button>
+      <button data-action="card#next">→</button>
+
+      <% @questions.each do |(card_id, question)| %>
+        <div data-card-target="card" data-card-id="<%= card_id %>">
+          <div class="field">
+            <label class="label"><%= question %></label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Answer">
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>

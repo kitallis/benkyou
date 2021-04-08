@@ -8,7 +8,13 @@ class GamesController < ApplicationController
 
   def show; end
 
-  def play; end
+  def play
+    @questions = @game.questions
+  end
+
+  def update
+
+  end
 
   def new
     @game = Game.new
