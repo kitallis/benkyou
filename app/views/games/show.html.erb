@@ -5,13 +5,21 @@
   <%= @game.name %>
 </p>
 
-<% if @game.playing? %>
-  <strong>(started)</strong>
+<% if @game.stopped? %>
+  <strong>(GAME IS FINISHED)</strong>
+<% elsif @game.playing? %>
+  <strong>(GAME IS STILL ACTIVE)</strong>
+<% else %>
+  <strong>(READY)</strong>
 <% end %>
 
 
-<% if @game.created? %>
+<% if !@game.stopped? && @game_user.ready? %>
   <%= link_to 'Start', start_game_path(@game), class: "button is-primary", method: :post %>
 <% end %>
+<% if @game.playing? && @game_user.playing? %>
+  <%= link_to 'Continue playing', play_game_path(@game) %> |
+<% end %>
+
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>

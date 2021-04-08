@@ -5,9 +5,9 @@ class GameChannel < ApplicationCable::Channel
     game = game(params[:id])
     game_user = game_user(game)
 
-    return reject unless game.exists?
-    return reject unless game_user.exists?
-    return reject if game_user.first.time_left < 1
+    return reject unless game.present?
+    return reject unless game_user.present?
+    return reject if game_user.time_left < 1
 
     stream_for game
   end
@@ -18,24 +18,24 @@ class GameChannel < ApplicationCable::Channel
     game = game(params[:id])
     game_user = game_user(game)
 
-    return unless game.first.playing?
-    return unless game.exists?
-    return unless game_user.exists?
+    return unless game.present?
+    return unless game.playing?
+    return unless game_user.present?
+    return unless game_user.playing?
 
-    time_left = game_user.first.time_left
+    time_left = game_user.time_left
     transmit({ time_left: "#{time_left}s remaining" })
+    return unless time_left < 1
 
-    return if time_left > 1
-
-    game_user.first.stop!
+    game.stop!(for_player: current_user)
     transmit({ time_left: 'TIME IS UP' })
   end
 
   def game(id)
-    Game.where(id: id)
+    Game.find(id)
   end
 
   def game_user(game)
-    GameUser.where(game: game, user: current_user)
+    GameUser.where(game: game, user: current_user).first
   end
 end

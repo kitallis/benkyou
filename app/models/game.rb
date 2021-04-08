@@ -36,17 +36,15 @@ class Game < ApplicationRecord
     transaction do
       game_users.where(user: for_player).first.play!
       update!(status: :playing)
-      ActionCable.server.broadcast('games', { player: for_player })
     end
   end
 
   def stop!(for_player:)
-    raise InvalidStatusChange unless playing?
+    raise InvalidStatusChange unless stopped? || playing?
 
     transaction do
       game_users.where(user: for_player).first.stop!
-      update!(status: :stopped)
-      ActionCable.server.broadcast('games', { player: for_player })
+      update!(status: :stopped) if game_users.all?(&:stopped?)
     end
   end
 

@@ -36,7 +36,7 @@ class GameUser < ApplicationRecord
   end
 
   def stop!
-    raise InvalidStatusChange unless playing?
+    raise InvalidStatusChange unless stopped? || playing?
 
     update!(status: :stopped)
   end
