@@ -1,32 +1,31 @@
-<%= form_with(model: card) do |form| %>
-  <% if card.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(card.errors.count, "error") %> prohibited this card from being saved:</h2>
+<%= form_with(model: [deck, card]) do |form| %>
+  <div class="block">
+    <div class="card">
+      <div class="card-content">
+        <div class="field">
+          <%= form.label :front, class: "label" %>
+          <div class="control">
+            <%= form.text_area :front, class: "textarea" %>
+          </div>
+        </div>
+      </div>
 
-      <ul>
-        <% card.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <hr class="navbar-divider">
+
+      <footer class="card-content">
+        <div class="field">
+          <%= form.label :back, class: "label" %>
+          <div class="control">
+            <%= form.text_field :back, class: "input" %>
+          </div>
+        </div>
+      </footer>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :front %>
-    <%= form.text_field :front %>
   </div>
 
-  <div class="field">
-    <%= form.label :back %>
-    <%= form.text_field :back %>
-  </div>
-
-  <div class="field">
-    <%= form.label :deck_id %>
-    <%= form.text_field :deck_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="field is-grouped">
+    <div class="control">
+      <%= form.submit 'Submit', class: "button is-link" %>
+    </div>
   </div>
 <% end %>

@@ -41,12 +41,11 @@ export default class extends Controller {
   }
 
   updateTimeLeft (data) {
-    const element = this.timeLeftTarget
-    element.innerHTML = data.time_left
+    this.timeLeftTarget.setAttribute("value", data.time_left_perc)
   }
 
   hasPlayEnded (data) {
-    return parseInt(data.time_left) === 0
+    return parseInt(data.time_left_perc) === 0.0
   }
 
   finishPlay () {

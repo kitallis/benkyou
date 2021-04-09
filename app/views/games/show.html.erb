@@ -1,24 +1,72 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @game.name %>
-</p>
+<h1 class="title"><%= @game.name %></h1>
 
 <% if @game.stopped? %>
-  <strong>(GAME IS FINISHED)</strong>
+  <span class="icon has-text-danger-dark">
+    <i class="fas fa-2x fa-th-large"></i>
+  </span>
+
+  <strong>Game completed</strong>
 <% elsif @game.started? %>
-  <strong>(GAME IS STILL ACTIVE)</strong>
+  <p>
+      <span class="icon is-medium has-text-success">
+    <i class="fas fa-2x fa-th-large"></i>
+  </span>
+
+  <h4 class="subtitle is-4">Game in progress</h4>
+  </p>
+
 <% else %>
-  <strong>(READY)</strong>
+  <span class="icon has-text-info">
+    <i class="fas fa-2x fa-th-large"></i>
+  </span>
+
+  <strong>Ready</strong>
 <% end %>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th colspan="1"></th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @players.each do |player| %>
+    <tr>
+      <td>
+        <% if player.avatar_url.present? %>
+          <figure class="image is-32x32" style="margin-right:.5em;">
+            <%= image_tag(player.avatar_url) %>
+          </figure>
+        <% else %>
+            <span class="icon is-small">
+              <i class="fas fa-portrait"></i>
+            </span>
+        <% end %>
+      </td>
+      <td><%= player.full_name %></td>
+      <td><%= player.email %></td>
+      <td>Active</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 
 <div class="search_bar">
   <%= form_with(url: game_plays_path(@game), method: :post, local: true) do |form| %>
     <%= content_tag :div, 'data-controller': "autocomplete", "data-autocomplete-url-value": game_player_search_index_path(@game) do %>
       <label>Add Players</label>
-      <input type="text" placeholder="Type to search..." data-autocomplete-target="input"/>
-      <input type="hidden" name="user_id" data-autocomplete-target="hidden"/>
+
+      <div class="field is-grouped">
+        <p class="control is-expanded">
+          <input type="text" placeholder="Search..." data-autocomplete-target="input"/>
+          <input type="hidden" name="user_id" data-autocomplete-target="hidden"/>
+        </p>
+      </div>
+
       <%= tag :ul, 'data-autocomplete-target': 'results', class: 'list-group autocomplete' %>
     <% end %>
 
@@ -26,24 +74,13 @@
   <% end %>
 </div>
 
-<div>
-  <h2>current players</h2>
-  <ul>
-    <% @players.each do |player| %>
-      <li>
-        <%= player.full_name %>
-        <%= player.email %>
-      </li>
-    <% end %>
-  </ul>
-</div>
-
 <% if !@game.stopped? && @play.created? %>
   <%= link_to 'Start', start_game_path(@game), class: "button is-primary", method: :post %>
 <% end %>
 <% if @game.started? && @play.started? %>
-  <%= link_to 'Continue playing...', game_play_path(@game, @play.id) %> |
+  <%= link_to 'Continue playing...', game_play_path(@game, @play.id) %>
 <% end %>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<% if @game.created? %>
+  <%= link_to 'Edit', edit_game_path(@game), class: "button is-light" %>
+<% end %>

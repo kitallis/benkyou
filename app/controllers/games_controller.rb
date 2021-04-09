@@ -3,7 +3,7 @@ class GamesController < ApplicationController
   before_action :set_play, only: %i[show play]
 
   def index
-    @games = Game.all
+    @games = Game.includes(:plays).where(plays: { user: current_user })
   end
 
   def show

@@ -33,6 +33,11 @@ class Play < ApplicationRecord
     time_left < 1
   end
 
+  def time_left_perc
+    100.0 * time_left / game.length
+  end
+
+
   def time_left
     game.length - time_elapsed
   end

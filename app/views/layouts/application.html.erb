@@ -17,42 +17,10 @@
 <body>
 <%= render 'partials/nav' %>
 
-<div class="section">
-  <main class="container">
-    <% flash.each do |type, message| %>
-      <div class="notification is-primary">
-        <button class="delete"></button>
-
-        <% case type %>
-        <% when 'error' %>
-              <span class="icon has-text-warning">
-                <i class="fa fa-warning"></i>
-              </span>
-        <% when 'alert' %>
-              <span class="icon has-text-danger">
-                <i class="fa fa-warning"></i>
-              </span>
-        <% when 'notice' %>
-              <span class="icon has-text-info">
-                <i class="fa fa-info-circle"></i>
-              </span>
-        <% when 'info' %>
-              <span class="icon has-text-notice">
-                <i class="fa fa-info-circle"></i>
-              </span>
-        <% when 'success' %>
-              <span class="icon has-text-warning">
-                <i class="fa fa-check-square"></i>
-              </span>
-        <% else %>
-          <% # no icon %>
-        <% end %>
-        <%= message %>
-      </div>
-    <% end %>
-
-    <%= yield %>
-  </main>
+<main class="container is-vcentered mt-6">
+  <%= render 'partials/flash', locals: { flash: flash } %>
+  <%= yield %>
+</main>
 </div>
 </body>
 </html>

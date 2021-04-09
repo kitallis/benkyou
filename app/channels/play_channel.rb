@@ -34,14 +34,12 @@ class PlayChannel < ApplicationCable::Channel
   def transmit_remaining_time
     return stop_stream_for(play) if reject?
 
-    time_left = play.time_left
-
     if play.time_up?
       play.time_up!
-      transmit({ time_left: 0 })
+      transmit({ time_left_perc: 0.0 })
       stop_stream_for(play)
     else
-      transmit({ time_left: time_left })
+      transmit({ time_left_perc: play.time_left_perc })
     end
   end
 

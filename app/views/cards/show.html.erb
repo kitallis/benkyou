@@ -1,19 +1,27 @@
-<p id="notice"><%= notice %></p>
+<div class="block">
+  <div class="card">
+    <div class="card-content">
+      <div class="columns is-centered">
+        <div class="column has-text-centered is-2">
+          <p class="is-size-1">
+            <%= @card.front %>
+          </p>
+        </div>
+      </div>
+    </div>
 
-<p>
-  <strong>Front:</strong>
-  <%= @card.front %>
-</p>
+    <hr class="navbar-divider">
 
-<p>
-  <strong>Back:</strong>
-  <%= @card.back %>
-</p>
+    <footer class="card-content">
+      <div class="columns is-centered">
+        <div class="column has-text-centered is-2">
+          <p class="is-size-5">
+            <%= @card.back %>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
 
-<p>
-  <strong>Deck:</strong>
-  <%= @card.deck_id %>
-</p>
-
-<%= link_to 'Edit', edit_card_path(@card) %> |
-<%= link_to 'Back', cards_path %>
+<%= link_to 'Edit', edit_deck_card_path(@deck, @card), class: "button is-light" %>

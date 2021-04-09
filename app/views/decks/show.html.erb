@@ -1,15 +1,42 @@
-<p id="notice"><%= notice %></p>
+<table class="table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Difficulty</th>
+  </tr>
+  </thead>
 
-<p>
-  <strong>Name:</strong>
-  <%= @deck.name %>
-</p>
+  <tbody>
+  <tr>
+    <td><%= @deck.name %></td>
+    <td><%= @deck.difficulty %></td>
+  </tr>
+  </tbody>
+</table>
 
-<p>
-  <strong>Difficulty:</strong>
-  <%= @deck.difficulty %>
-</p>
+<% if @deck.cards.exists? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>front</th>
+      <th>back</th>
+    </tr>
+    </thead>
 
-<%= link_to "New Card", new_deck_card_path(@deck) %> |
-<%= link_to 'Edit', edit_deck_path(@deck) %> |
-<%= link_to 'Back', decks_path %>
+    <tbody>
+    <% @deck.cards.each do |card| %>
+      <tr>
+        <td><%= card.front %></td>
+        <td><%= card.back %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="block">
+    No cards in this deck.
+  </p>
+<% end %>
+
+<%= link_to "New Card", new_deck_card_path(@deck), class: "button is-black" %>
+<%= link_to 'Edit Deck', edit_deck_path(@deck), class: "button is-light" %>

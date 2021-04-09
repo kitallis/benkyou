@@ -1,27 +1,25 @@
 <%= form_with(model: deck) do |form| %>
-  <% if deck.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(deck.errors.count, "error") %> prohibited this deck from being saved:</h2>
-
-      <ul>
-        <% deck.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+  <div class="block">
+    <div class="field">
+      <%= form.label :name, class: "label" %>
+      <div class="control">
+        <%= form.text_field :name, class: "input" %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+    <div class="field">
+      <%= form.label :difficulty, class: "label" %>
+      <div class="control">
+        <div class="select">
+          <%= form.select :difficulty, options_for_select(Deck.difficulties.map { |key, value| [key.titleize, Deck.difficulties.key(value)] }, deck.difficulty) %>
+        </div>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= form.label :difficulty %>
-    <%= form.text_field :difficulty %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+    <div class="field is-grouped">
+      <div class="control">
+        <%= form.submit 'Submit', class: "button is-link" %>
+      </div>
+    </div>
   </div>
 <% end %>

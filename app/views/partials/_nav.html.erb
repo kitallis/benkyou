@@ -2,44 +2,30 @@
   <div class="hero-head">
     <nav aria-label="main navigation" class="navbar has-shadow" role="navigation">
       <div class="navbar-brand">
-        <a class="navbar-item is-brand">
+        <a href="/" class="navbar-item is-brand">
           <img alt="勉強 Benkyou" class="navbar-brand-logo" src="<%= asset_path("title.png") %>"/>
         </a>
 
-        <a class="navbar-item is-tab is-hidden-mobile">Games</a>
-        <a class="navbar-item is-tab is-hidden-mobile">Decks</a>
-        <a class="navbar-item is-tab is-hidden-mobile">About</a>
+        <% if current_user %>
+          <%= link_to "Games", games_path, class: "navbar-item is-tab is-hidden-mobile" %>
+          <%= link_to "Decks", decks_path, class: "navbar-item is-tab is-hidden-mobile" %>
+        <% end %>
 
-        <button class="button navbar-burger" data-target="navMenu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <a class="navbar-item is-tab is-hidden-mobile">About</a>
       </div>
 
       <div class="navbar-menu navbar-end" id="navMenu">
-        <% if current_user %>
+        <% if current_user.present? %>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               <figure class="image is-32x32" style="margin-right:.5em;">
-                <%= image_tag(curent_user.avatar_url) %>
+                <%= image_tag(current_user.avatar_url) %>
               </figure>
 
-              <%= current_user.full_name %>>
+              <%= current_user.full_name %>
             </a>
 
             <div class="navbar-dropdown is-right">
-              <a class="navbar-item">
-              <span class="icon is-small">
-                <i class="fa fa-fw fa-user-o"></i>
-              </span>
-                <span>
-                Profile
-              </span>
-              </a>
-
-              <hr class="navbar-divider"/>
-
               <a class="navbar-item">
               <span class="icon is-small">
                 <i class="fa fa-fw fa-power-off"></i>

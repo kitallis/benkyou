@@ -1,27 +1,19 @@
 <%= form_with(model: game) do |form| %>
-  <% if game.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(game.errors.count, "error") %> prohibited this game from being saved:</h2>
-
-      <ul>
-        <% game.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+  <div class="block">
+    <div class="field">
+      <%= form.label :name, class: "label" %>
+      <%= form.text_field :name, class: "input" %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <div class="field">
+      <%= form.label "Length (in seconds)", class: "label" %>
+      <%= form.text_field :length, type: "number", class: "input" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :length %>
-    <%= form.text_field :length %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="field is-grouped">
+    <div class="control">
+      <%= form.submit 'Submit', class: "button is-link" %>
+    </div>
   </div>
 <% end %>

@@ -7,6 +7,8 @@ class Game < ApplicationRecord
   has_many :cards, through: :decks
   has_many :users, through: :plays
   enum status: STATUSES
+  validates :name, :length, presence: true
+  validates :length, numericality: { only_integer: true }
 
   def create_with_player!(player)
     transaction do

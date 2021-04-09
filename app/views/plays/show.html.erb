@@ -1,17 +1,10 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @game.name %>
-</p>
+<h1 class="title"><%= @game.name %></h1>
 
 <% if @game.stopped? %>
   <strong>(GAME IS FINISHED)</strong>
 <% else %>
   <div id="play" data-controller="play" data-play-id="<%= @play.id %>">
-    <div data-play-target="timeLeft">
-      N/A
-    </div>
+    <progress data-play-target="timeLeft" class="progress is-small is-primary" max="100">15%</progress>
 
     <strong>(started)</strong>
 

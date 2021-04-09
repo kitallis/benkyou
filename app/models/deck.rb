@@ -7,4 +7,5 @@ class Deck < ApplicationRecord
     hard: "hard",
     v_hard: "v_hard"
   }
+  validates :name, :difficulty, presence: true
 end

@@ -1,4 +1,5 @@
 class CardsController < ApplicationController
+  before_action :set_deck, only: %i[new create show edit update destroy]
   before_action :set_card, only: %i[show edit update destroy]
 
   def index
@@ -16,11 +17,11 @@ class CardsController < ApplicationController
   end
 
   def create
-    @card = Card.new(card_params)
+    @card = @deck.cards.new(card_params)
 
     respond_to do |format|
       if @card.save
-        format.html { redirect_to @card, notice: "Card was successfully created." }
+        format.html { redirect_to [@deck, @card], notice: "Card was successfully created." }
         format.json { render :show, status: :created, location: @card }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -32,7 +33,7 @@ class CardsController < ApplicationController
   def update
     respond_to do |format|
       if @card.update(card_params)
-        format.html { redirect_to @card, notice: "Card was successfully updated." }
+        format.html { redirect_to [@deck, @card], notice: "Card was successfully updated." }
         format.json { render :show, status: :ok, location: @card }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +56,11 @@ class CardsController < ApplicationController
     @card = Card.find(params[:id])
   end
 
+  def set_deck
+    @deck = Deck.find(params[:deck_id])
+  end
+
   def card_params
-    params.require(:card).permit(:front, :back, :deck_id)
+    params.require(:card).permit(:front, :back)
   end
 end
