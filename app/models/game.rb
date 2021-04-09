@@ -16,8 +16,16 @@ class Game < ApplicationRecord
     end
   end
 
+  def players
+    plays.includes(:user).map(&:user)
+  end
+
   def add_player!(player)
     plays.create!(user: player)
+  end
+
+  def plays_over?
+    plays.all? { |play| play.time_up? || play.stopped? }
   end
 
   # This won't run into a race condition since the Game can go from 'playing' to 'playing'

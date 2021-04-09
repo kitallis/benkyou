@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_08_153823) do
+ActiveRecord::Schema.define(version: 2021_04_09_131034) do
 
   create_table "answers", force: :cascade do |t|
     t.string "attempt"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2021_04_08_153823) do
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id", "user_id"], name: "index_plays_on_game_id_and_user_id", unique: true
     t.index ["game_id"], name: "index_plays_on_game_id"
     t.index ["user_id"], name: "index_plays_on_user_id"
   end

@@ -1,0 +1,5 @@
+<% @players.each do |player| %>
+  <li class="list-group-item" role="option" data-autocomplete-value="<%= player.id %>">
+    <%= player.full_name %>
+  </li>
+<% end %>

@@ -24,7 +24,7 @@ class Play < ApplicationRecord
     answers.correct.size
   end
 
-  # TODO: this method might be confusing
+  # FIXME: this method is confusing
   def finished?
     stopped? || game.stopped?
   end

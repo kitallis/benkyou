@@ -10,5 +10,6 @@
   <%= @deck.difficulty %>
 </p>
 
+<%= link_to "New Card", new_deck_card_path(@deck) %> |
 <%= link_to 'Edit', edit_deck_path(@deck) %> |
 <%= link_to 'Back', decks_path %>

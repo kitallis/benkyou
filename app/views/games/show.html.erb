@@ -13,6 +13,30 @@
   <strong>(READY)</strong>
 <% end %>
 
+<div class="search_bar">
+  <%= form_with(url: game_plays_path(@game), method: :post, local: true) do |form| %>
+    <%= content_tag :div, 'data-controller': "autocomplete", "data-autocomplete-url-value": game_player_search_index_path(@game) do %>
+      <label>Add Players</label>
+      <input type="text" placeholder="Type to search..." data-autocomplete-target="input"/>
+      <input type="hidden" name="user_id" data-autocomplete-target="hidden"/>
+      <%= tag :ul, 'data-autocomplete-target': 'results', class: 'list-group autocomplete' %>
+    <% end %>
+
+    <%= form.button "Add", name: nil %>
+  <% end %>
+</div>
+
+<div>
+  <h2>current players</h2>
+  <ul>
+    <% @players.each do |player| %>
+      <li>
+        <%= player.full_name %>
+        <%= player.email %>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <% if !@game.stopped? && @play.created? %>
   <%= link_to 'Start', start_game_path(@game), class: "button is-primary", method: :post %>
