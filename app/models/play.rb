@@ -7,13 +7,13 @@ class Play < ApplicationRecord
   has_many :answers
 
   enum status: {
-    ready: "ready",
-    playing: "playing",
+    created: "created",
+    started: "started",
     stopped: "stopped"
   }
 
   before_create do
-    self.status = :ready
+    self.status = :created
   end
 
   delegate :cards, to: :game
@@ -45,14 +45,21 @@ class Play < ApplicationRecord
     Time.now.to_i - started_at.to_i
   end
 
-  def play!
-    raise InvalidStatusChange unless ready? || playing?
+  def submit!(submissions)
+    transaction do
+      answers.create!(submissions)
+      stop!
+    end
+  end
 
-    update!(status: :playing, started_at: Time.now)
+  def play!
+    raise InvalidStatusChange unless created? || started?
+
+    update!(status: :started, started_at: Time.now)
   end
 
   def stop!
-    raise InvalidStatusChange unless stopped? || playing?
+    raise InvalidStatusChange unless stopped? || started?
 
     update!(status: :stopped)
   end

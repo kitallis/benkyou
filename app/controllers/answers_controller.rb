@@ -5,9 +5,14 @@ class AnswersController < ApplicationController
   def create
     raise StandardError if @play.stopped?
 
-    card_attempt_pairs.each do |(card_id, attempt)|
-      @play.answers.create!(card_id: card_id, attempt: attempt)
+    answer_params = card_attempt_pairs.map do |(card_id, attempt)|
+      {
+        card_id: card_id,
+        attempt: attempt
+      }
     end
+
+    @play.submit!(answer_params)
 
     redirect_to game_path(@game)
   end

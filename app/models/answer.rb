@@ -8,8 +8,8 @@ class Answer < ApplicationRecord
 
   delegate :game, to: :play
 
-  def game_has_started?
-    game.playing?
+  def game_started?
+    game.started?
   end
 
   def correct?(attempt)

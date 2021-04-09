@@ -29,7 +29,7 @@ class GamesController < ApplicationController
 
   def start
     @game.start!(for_player: current_user)
-    redirect_to game_play_path(@game, current_user.plays.where(game: @game))
+    redirect_to game_play_path(@game, current_user.plays.find_by!(game: @game))
   end
 
   private

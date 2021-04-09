@@ -19,7 +19,7 @@ export default class extends Controller {
   }
 
   initialize() {
-    console.log("INITd game")
+    console.log("INIT'd play")
 
     // https://dev.to/leastbad/the-best-one-line-stimulus-power-move-2o90
     this.element[this.identifier] = this

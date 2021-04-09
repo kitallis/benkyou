@@ -9,7 +9,7 @@ class Game < ApplicationRecord
 
   enum status: {
     created: "created",
-    playing: "playing",
+    started: "started",
     stopped: "stopped"
   }
 
@@ -32,16 +32,16 @@ class Game < ApplicationRecord
   # This won't run into a race condition since the Game can go from 'playing' to 'playing'
   # i.e. not break if the 'playing' status is re-applied during a game start by another player
   def start!(for_player:)
-    raise InvalidStatusChange unless created? || playing?
+    raise InvalidStatusChange unless created? || started?
 
     transaction do
       plays.where(user: for_player).first.play!
-      update!(status: :playing)
+      update!(status: :started)
     end
   end
 
   def stop!(for_player:)
-    raise InvalidStatusChange unless stopped? || playing?
+    raise InvalidStatusChange unless stopped? || started?
 
     transaction do
       plays.where(user: for_player).first.stop!

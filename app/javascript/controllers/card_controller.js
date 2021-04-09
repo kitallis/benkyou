@@ -5,7 +5,7 @@ export default class extends Controller {
   static values = {index: Number}
 
   initialize() {
-    console.log("INITd play")
+    console.log("INIT'd play")
     this.channel = document.querySelector('#play').play.subscription
   }
 
@@ -56,10 +56,6 @@ export default class extends Controller {
 
   get previousCard() {
     return this.cardTargets[this.previousIndex]
-  }
-
-  state() {
-    return this.cardTargets.map(card => this.stateFor(card))
   }
 
   stateFor(card) {

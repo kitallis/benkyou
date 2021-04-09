@@ -7,18 +7,18 @@
 
 <% if @game.stopped? %>
   <strong>(GAME IS FINISHED)</strong>
-<% elsif @game.playing? %>
+<% elsif @game.started? %>
   <strong>(GAME IS STILL ACTIVE)</strong>
 <% else %>
   <strong>(READY)</strong>
 <% end %>
 
 
-<% if !@game.stopped? && @play.ready? %>
+<% if !@game.stopped? && @play.created? %>
   <%= link_to 'Start', start_game_path(@game), class: "button is-primary", method: :post %>
 <% end %>
-<% if @game.playing? && @play.playing? %>
-  <%= link_to 'Continue playing', game_play_path(@game, @play.id) %> |
+<% if @game.started? && @play.started? %>
+  <%= link_to 'Continue playing...', game_play_path(@game, @play.id) %> |
 <% end %>
 
 <%= link_to 'Edit', edit_game_path(@game) %> |

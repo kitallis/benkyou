@@ -37,12 +37,12 @@ class GameTest < ActiveSupport::TestCase
   end
 
   describe "#start" do
-    it "updates the game status to 'playing'" do
+    it "updates the game status to 'started'" do
       game = create_game
 
       game.start!
 
-      expect(game.playing?).must_equal true
+      expect(game.started?).must_equal true
     end
 
     it "raises an exception if status is 'stopped'" do
