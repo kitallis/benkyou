@@ -1,5 +1,5 @@
 class PlayChannel < ApplicationCable::Channel
-  periodically :transmit_remaining_time, every: 1.second
+  periodically :transmit_remaining_time, every: 2.seconds
 
   def subscribed
     return reject if reject?
@@ -15,6 +15,8 @@ class PlayChannel < ApplicationCable::Channel
   end
 
   def receive_answers(answers)
+    return stop_stream_for(play) if play.time_up?
+
     answers.each do |answer|
       card_id = answer["cardId"].to_i
       attempt = answer["value"]
@@ -30,15 +32,17 @@ class PlayChannel < ApplicationCable::Channel
   end
 
   def transmit_remaining_time
-    return if reject?
+    return stop_stream_for(play) if reject?
 
     time_left = play.time_left
-    transmit({time_left: "#{time_left}s remaining"})
 
-    return if time_left > 1
-
-    game.stop!(for_player: current_user)
-    transmit({time_left: 0})
+    if play.time_up?
+      play.time_up!
+      transmit({ time_left: 0 })
+      stop_stream_for(play)
+    else
+      transmit({ time_left: time_left })
+    end
   end
 
   def card(id)
@@ -52,6 +56,6 @@ class PlayChannel < ApplicationCable::Channel
   end
 
   def reject?
-    game.blank? || game.stopped? || play.blank? || play.stopped? || play.time_left < 1
+    play.blank? || play.finished?
   end
 end

@@ -6,6 +6,7 @@ class Game < ApplicationRecord
   has_many :decks, through: :game_decks
   has_many :cards, through: :decks
   has_many :users, through: :plays
+  enum status: STATUSES
 
   def create_with_player!(player)
     transaction do

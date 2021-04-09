@@ -26,6 +26,7 @@ gem "webpacker", "~> 5.0"
 group :development, :test do
   gem "standard"
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "pry-byebug"
 end
 
 group :development do

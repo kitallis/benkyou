@@ -5,13 +5,14 @@ class Play < ApplicationRecord
   belongs_to :user
   has_many :answers
   delegate :cards, to: :game
+  enum status: STATUSES.merge(time_up: "time_up")
 
   def questions
     attempted_answers = answers.includes(:card).where(card: cards)
     result = cards.map do |card|
       {
         card: card,
-        attempted_answer: attempted_answers.find { |a| a.card == card }
+        attempted_answer: attempted_answers.find { |a| a.card.eq?(card) }
       }
     end
 
@@ -21,6 +22,15 @@ class Play < ApplicationRecord
 
   def score
     answers.correct.size
+  end
+
+  # TODO: this method might be confusing
+  def finished?
+    stopped? || game.stopped?
+  end
+
+  def time_up?
+    time_left < 1
   end
 
   def time_left
@@ -46,8 +56,14 @@ class Play < ApplicationRecord
     update!(status: :started, started_at: Time.now)
   end
 
+  def time_up!
+    raise InvalidStatusChange unless time_up? || started?
+
+    update!(status: :time_up)
+  end
+
   def stop!
-    raise InvalidStatusChange unless stopped? || started?
+    raise InvalidStatusChange unless stopped? || started? || time_up?
 
     update!(status: :stopped)
   end
