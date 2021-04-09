@@ -4,8 +4,10 @@ class Play < ApplicationRecord
   belongs_to :game
   belongs_to :user
   has_many :answers
-  delegate :cards, to: :game
+
   enum status: STATUSES.merge(time_up: "time_up")
+
+  delegate :cards, to: :game
 
   def questions
     attempted_answers = answers.includes(:card).where(card: cards)

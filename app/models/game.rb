@@ -6,9 +6,13 @@ class Game < ApplicationRecord
   has_many :decks, through: :game_decks
   has_many :cards, through: :decks
   has_many :users, through: :plays
+
   enum status: STATUSES
+
   validates :name, :length, presence: true
   validates :length, numericality: { only_integer: true }
+  validate :at_least_one_player?, on: [:create, :update]
+  validate :at_least_one_game_deck?, on: [:create, :update]
 
   def create_with_player!(player)
     transaction do
@@ -47,6 +51,20 @@ class Game < ApplicationRecord
     transaction do
       plays.where(user: for_player).first.stop!
       update!(status: :stopped) if plays.all?(&:stopped?)
+    end
+  end
+
+  private
+
+  def at_least_one_player?
+    if plays.empty?
+      errors.add(:plays, "need at least one player")
+    end
+  end
+
+  def at_least_one_game_deck?
+    if game_decks.empty?
+      errors.add(:game_decks, "attach at least 1 game deck")
     end
   end
 end

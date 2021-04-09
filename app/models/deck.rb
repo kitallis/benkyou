@@ -1,5 +1,6 @@
 class Deck < ApplicationRecord
   has_many :cards
+
   enum difficulty: {
     v_easy: "v_easy",
     easy: "easy",
@@ -7,5 +8,6 @@ class Deck < ApplicationRecord
     hard: "hard",
     v_hard: "v_hard"
   }
+
   validates :name, :difficulty, presence: true
 end

@@ -1,8 +1,11 @@
 class Answer < ApplicationRecord
   belongs_to :play
   belongs_to :card
-  validate -> { !play.finished? }, on: [:create, :update]
+
   scope :correct, -> { where(correct: true) }
+
+  validate -> { !play.finished? }, on: [:create, :update]
+
   delegate :game, to: :play
 
   def correct?(attempt)
