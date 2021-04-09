@@ -1,55 +1,68 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          Make
+<header class="hero is-light">
+  <div class="hero-head">
+    <nav aria-label="main navigation" class="navbar has-shadow" role="navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item is-brand">
+          <img alt="勉強 Benkyou" class="navbar-brand-logo" src="<%= asset_path("title.png") %>"/>
         </a>
 
-        <div class="navbar-dropdown">
-          <%= link_to new_deck_path, class: "navbar-item" do %>
-            Deck
-          <% end %>
+        <a class="navbar-item is-tab is-hidden-mobile">Games</a>
+        <a class="navbar-item is-tab is-hidden-mobile">Decks</a>
+        <a class="navbar-item is-tab is-hidden-mobile">About</a>
 
-          <%= link_to new_card_path, class: "navbar-item" do %>
-            Card
-          <% end %>
-
-          <hr class="navbar-divider">
-
-          <a class="navbar-item">
-            Report an issue
-          </a>
-        </div>
+        <button class="button navbar-burger" data-target="navMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-    </div>
 
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <% if current_user %>
-            <div class="navbar-item">
-              <%= image_tag(current_user.avatar_url) unless current_user.avatar_url.nil? %>
+      <div class="navbar-menu navbar-end" id="navMenu">
+        <% if current_user %>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <figure class="image is-32x32" style="margin-right:.5em;">
+                <%= image_tag(curent_user.avatar_url) %>
+              </figure>
+
+              <%= current_user.full_name %>>
+            </a>
+
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item">
+              <span class="icon is-small">
+                <i class="fa fa-fw fa-user-o"></i>
+              </span>
+                <span>
+                Profile
+              </span>
+              </a>
+
+              <hr class="navbar-divider"/>
+
+              <a class="navbar-item">
+              <span class="icon is-small">
+                <i class="fa fa-fw fa-power-off"></i>
+              </span>
+                <span>
+                Logout
+              </span>
+              </a>
             </div>
-
-            <%= link_to destroy_user_session_path, class: "button is-primary", method: :post, rel: "nofollow" do %>
-              <strong>Logout</strong>
+          </div>
+        <% else %>
+          <div class="navbar-item is-arrowless">
+            <%= link_to "/users/auth/google_oauth2", class: "navbar-link", method: :post, rel: "nofollow" do %>
+              Sign up • Login with Google
             <% end %>
-          <% else %>
-            <%= link_to "/users/auth/google_oauth2", class: "button is-primary", method: :post, rel: "nofollow" do %>
-              <strong>Sign up • Login with Google</strong>
-            <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
-    </div>
+    </nav>
   </div>
-</nav>
+</header>
+
+<%#= link_to destroy_user_session_path, class: "button is-primary", method: :post, rel: "nofollow" do %>
+<!--  <strong>Logout</strong>-->
+<%# end %>
+<%# else %>

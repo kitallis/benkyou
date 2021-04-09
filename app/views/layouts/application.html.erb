@@ -1,25 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Benkyou</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta content="index, follow" name="robots"/>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+  <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+  <meta content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=7" name="viewport"/>
+  <meta content="en-EN" name="language"/>
+  <meta content="Akshay Gupta" name="author"/>
+  <title>勉強 Benkyou</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
+<body>
 <%= render 'partials/nav' %>
 
-<body>
+<div class="section">
+  <main class="container">
+    <% flash.each do |type, message| %>
+      <div class="notification is-primary">
+        <button class="delete"></button>
 
-<div class="container">
-  <article>
+        <% case type %>
+        <% when 'error' %>
+              <span class="icon has-text-warning">
+                <i class="fa fa-warning"></i>
+              </span>
+        <% when 'alert' %>
+              <span class="icon has-text-danger">
+                <i class="fa fa-warning"></i>
+              </span>
+        <% when 'notice' %>
+              <span class="icon has-text-info">
+                <i class="fa fa-info-circle"></i>
+              </span>
+        <% when 'info' %>
+              <span class="icon has-text-notice">
+                <i class="fa fa-info-circle"></i>
+              </span>
+        <% when 'success' %>
+              <span class="icon has-text-warning">
+                <i class="fa fa-check-square"></i>
+              </span>
+        <% else %>
+          <% # no icon %>
+        <% end %>
+        <%= message %>
+      </div>
+    <% end %>
+
     <%= yield %>
-  </article>
+  </main>
 </div>
 </body>
-
 </html>
 
