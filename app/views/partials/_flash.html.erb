@@ -1,0 +1,35 @@
+<div class="block">
+  <% flash.each do |type, message| %>
+    <div data-controller="notification">
+      <div data-notification-target="notification" class="notification is-primary is-light">
+        <button data-action="notification#kill" class="delete"></button>
+
+        <% case type %>
+        <% when 'error' %>
+              <span class="icon has-text-warning">
+                <i class="fa fa-warning"></i>
+              </span>
+        <% when 'alert' %>
+              <span class="icon has-text-danger">
+                <i class="fa fa-warning"></i>
+              </span>
+        <% when 'notice' %>
+              <span class="icon has-text-info">
+                <i class="fa fa-info-circle"></i>
+              </span>
+        <% when 'info' %>
+              <span class="icon has-text-notice">
+                <i class="fa fa-info-circle"></i>
+              </span>
+        <% when 'success' %>
+              <span class="icon has-text-warning">
+                <i class="fa fa-check-square"></i>
+              </span>
+        <% else %>
+          <% # no icon %>
+        <% end %>
+        <%= message %>
+      </div>
+    </div>
+  <% end %>
+</div>
