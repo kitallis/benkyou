@@ -1,6 +1,5 @@
 class Deck < ApplicationRecord
   has_many :cards
-
   enum difficulty: {
     v_easy: "v_easy",
     easy: "easy",

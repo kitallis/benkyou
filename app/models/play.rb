@@ -1,21 +1,9 @@
 class Play < ApplicationRecord
-  class InvalidStatusChange < StandardError; end
+  include State
 
   belongs_to :game
   belongs_to :user
-
   has_many :answers
-
-  enum status: {
-    created: "created",
-    started: "started",
-    stopped: "stopped"
-  }
-
-  before_create do
-    self.status = :created
-  end
-
   delegate :cards, to: :game
 
   def questions

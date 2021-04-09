@@ -1,21 +1,11 @@
 class Game < ApplicationRecord
-  class InvalidStatusChange < StandardError; end
+  include State
 
   has_many :game_decks
   has_many :plays
   has_many :decks, through: :game_decks
   has_many :cards, through: :decks
   has_many :users, through: :plays
-
-  enum status: {
-    created: "created",
-    started: "started",
-    stopped: "stopped"
-  }
-
-  before_create do
-    self.status = :created
-  end
 
   def create_with_player!(player)
     transaction do
