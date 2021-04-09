@@ -3,8 +3,6 @@ class AnswersController < ApplicationController
   before_action :set_game, only: %i[show create]
 
   def create
-    raise StandardError if @play.stopped?
-
     answer_params = card_attempt_pairs.map do |(card_id, attempt)|
       {
         card_id: card_id,

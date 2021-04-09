@@ -1,59 +1,65 @@
-import { Controller } from "stimulus";
-import consumer from "channels/consumer";
+import { Controller } from 'stimulus'
+import consumer from 'channels/consumer'
+import Rails from '@rails/ujs'
 
 export default class extends Controller {
-  static targets = ["timeLeft"];
+  static targets = ["timeLeft", "playForm"];
 
-  connect() {
+  connect () {
     this.channel = consumer.subscriptions.create(
       {
-        channel: "PlayChannel",
-        id: this.data.get("id"),
+        channel: 'PlayChannel',
+        id: this.data.get('id')
       },
       {
         connected: this._connected.bind(this),
         received: this._received.bind(this),
-        disconnected: this._disconnected.bind(this),
+        disconnected: this._disconnected.bind(this)
       }
-    );
+    )
   }
 
-  initialize() {
+  initialize () {
     console.log("INIT'd play")
 
     // https://dev.to/leastbad/the-best-one-line-stimulus-power-move-2o90
     this.element[this.identifier] = this
   }
 
-  _received(data) {
+  _received (data) {
     this.updateTimeLeft(data)
     this.checkPlayStatus(data)
   }
 
-  _connected() {}
-  _disconnected() {}
+  _connected () {}
+  _disconnected () {}
 
-  checkPlayStatus(data) {
-    if (this.has_play_ended(data)) {
-      alert("Game has ended!")
-      this.unsubscribe()
+  checkPlayStatus (data) {
+    if (this.hasPlayEnded(data)) {
+      this.finishPlay()
     }
   }
 
-  updateTimeLeft(data) {
+  updateTimeLeft (data) {
     const element = this.timeLeftTarget
     element.innerHTML = data.time_left
   }
 
-  has_play_ended(data) {
+  hasPlayEnded (data) {
     return parseInt(data.time_left) === 0
   }
 
-  get subscription() {
+  finishPlay () {
+    alert('Game has ended!')
+    this.unsubscribe()
+    Rails.fire(this.playFormTarget, 'submit')
+  }
+
+  get subscription () {
     return this.channel
   }
 
-  unsubscribe() {
+  unsubscribe () {
     this.channel.unsubscribe()
   }
 }

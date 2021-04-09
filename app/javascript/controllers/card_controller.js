@@ -1,15 +1,15 @@
-import {Controller} from "stimulus"
+import { Controller } from 'stimulus'
 
 export default class extends Controller {
   static targets = ["card"]
   static values = {index: Number}
 
-  initialize() {
+  initialize () {
     console.log("INIT'd play")
     this.channel = document.querySelector('#play').play.subscription
   }
 
-  next() {
+  next () {
     this.previousIndex = this.indexValue
 
     this.updateAnswer()
@@ -21,7 +21,7 @@ export default class extends Controller {
     }
   }
 
-  previous() {
+  previous () {
     this.previousIndex = this.indexValue
 
     this.updateAnswer()
@@ -33,35 +33,35 @@ export default class extends Controller {
     }
   }
 
-  updateAnswer() {
-    this.channel.send({answers: [this.stateFor(this.previousCard)]})
+  updateAnswer () {
+    this.channel.send({ answers: [this.stateFor(this.previousCard)] })
   }
 
-  indexValueChanged() {
+  indexValueChanged () {
     this.hideAllCards()
     this.currentCard.hidden = false
   }
 
-  hideAllCards() {
+  hideAllCards () {
     this.cardTargets.forEach(element => element.hidden = true)
   }
 
-  totalCards() {
+  totalCards () {
     return this.cardTargets.length - 1
   }
 
-  get currentCard() {
+  get currentCard () {
     return this.cardTargets[this.indexValue]
   }
 
-  get previousCard() {
+  get previousCard () {
     return this.cardTargets[this.previousIndex]
   }
 
-  stateFor(card) {
+  stateFor (card) {
     return {
       cardId: card.dataset.cardId,
-      value: card.querySelector(".input").value
+      value: card.querySelector('.input').value
     }
   }
 }

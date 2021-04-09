@@ -15,7 +15,7 @@
 
     <strong>(started)</strong>
 
-    <%= form_with url: game_play_answers_path(@game, @play) do |form| %>
+    <%= form_with url: game_play_answers_path(@game, @play), data: { play_target: "playForm" } do |form| %>
       <%= form.submit "Done" %>
 
       <div data-controller="card" data-play-index-value="1">
