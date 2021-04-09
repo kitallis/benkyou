@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :games do
     resources :plays, only: [:show] do
-      resources :answers, except: [:destroy]
+      resources :answers, only: [:create]
     end
     member do
       post :start
