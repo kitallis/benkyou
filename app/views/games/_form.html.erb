@@ -9,6 +9,40 @@
       <%= form.label "Length (in seconds)", class: "label" %>
       <%= form.text_field :length, type: "number", class: "input" %>
     </div>
+
+    <%= form.label "Add players", class: "label" %>
+    <div data-controller="autocomplete" data-autocomplete-url="<%= player_search_index_path %>">
+      <script data-autocomplete-target="suggestionTemplate" type="text/template">
+        <h2>{{full_name}}</h2>
+        <p>{{email}}</p>
+      </script>
+
+      <input data-autocomplete-target="field" class="input"/>
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th colspan="1"></th>
+        </tr>
+        </thead>
+
+        <tbody data-autocomplete-target="selectionInsert">
+        <script data-autocomplete-target="selectionTemplate" type="text/template">
+          <tr>
+            <td data-autocomplete-target="insertedSelection" data-selected-id="{{id}}">
+              {{full_name}}
+              <input type="hidden" name="user_id[]" value="{{id}}" data-autocomplete-target="hidden"/>
+            </td>
+
+            <td>
+              <a>Remove</a>
+            </td>
+          </tr>
+        </script>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="field is-grouped">
