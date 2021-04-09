@@ -1,8 +1,12 @@
-# create users
+# create players
 user_list = {
   "Akshay Gupta": "kitallis@mailinator.com",
   "Nivedita Priyadarshini": "nid@mailinator.com",
-  "Preethi Govindarajan": "pree@mailinator.com"
+  "Preethi Govindarajan": "pree@mailinator.com",
+  "Ragini Vijay": "gin@mailinator.com",
+  "Sagarika Padha": "pop@mailinator.com",
+  "Aarika Solanki": "aariks@mailinator.com",
+  "Andrea": "andrea@mailinator.com",
 }
 password = "hunter2"
 users = if User.all.blank?
@@ -48,7 +52,7 @@ game_names = ["kit v nid", "pree v gin"]
 game_names.each do |name|
   game = Game.create!(name: name, status: Game.statuses.values.sample, length: 5000)
 
-  users.each do |user|
+  [users.first, users.drop(1).sample(3)].flatten.each do |user|
     Play.create!(game: game, user: user, status: Play.statuses.values.sample)
   end
 
