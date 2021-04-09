@@ -1,17 +1,17 @@
 # create users
 user_list = {
-  "Akshay Gupta": 'kitallis@mailinator.com',
-  "Nivedita Priyadarshini": 'nid@mailinator.com',
-  "Preethi Govindarajan": 'pree@mailinator.com'
+  "Akshay Gupta": "kitallis@mailinator.com",
+  "Nivedita Priyadarshini": "nid@mailinator.com",
+  "Preethi Govindarajan": "pree@mailinator.com"
 }
-password = 'hunter2'
+password = "hunter2"
 users = if User.all.blank?
-          user_list.map do |name, email|
-            User.create!(full_name: name, email: email, password: password)
-          end
-        else
-          User.all
-        end
+  user_list.map do |name, email|
+    User.create!(full_name: name, email: email, password: password)
+  end
+else
+  User.all
+end
 
 # destroy existing non-user data
 GameDeck.delete_all
@@ -29,13 +29,13 @@ end
 
 # create cards
 cards = {
-  cat: 'ねこ',
-  dog: '犬',
-  father: 'お父さん',
-  mother: '母',
-  sleep: 'ねます',
-  write: 'かきます',
-  grandfather: 'おじいさん'
+  cat: "ねこ",
+  dog: "犬",
+  father: "お父さん",
+  mother: "母",
+  sleep: "ねます",
+  write: "かきます",
+  grandfather: "おじいさん"
 }
 decks.each do |deck|
   cards.each do |front, back|
@@ -44,7 +44,7 @@ decks.each do |deck|
 end
 
 # create games
-game_names = ['kit v nid', 'pree v gin']
+game_names = ["kit v nid", "pree v gin"]
 game_names.each do |name|
   game = Game.create!(name: name, status: Game.statuses.values.sample, length: 5000)
 
@@ -56,4 +56,3 @@ game_names.each do |name|
     GameDeck.create!(deck: deck, game: game, inverted: [true, false].sample)
   end
 end
-

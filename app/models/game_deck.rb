@@ -10,4 +10,3 @@ class GameDeck < ApplicationRecord
     inverted
   end
 end
-

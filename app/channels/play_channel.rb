@@ -7,16 +7,17 @@ class PlayChannel < ApplicationCable::Channel
     stream_for play
   end
 
-  def unsubscribed; end
+  def unsubscribed
+  end
 
   def receive(data)
-    receive_answers(data['answers'])
+    receive_answers(data["answers"])
   end
 
   def receive_answers(answers)
     answers.each do |answer|
-      card_id = answer['cardId'].to_i
-      attempt = answer['value']
+      card_id = answer["cardId"].to_i
+      attempt = answer["value"]
 
       answer = play.answers.find_by(card: card(card_id))
 
@@ -32,12 +33,12 @@ class PlayChannel < ApplicationCable::Channel
     return if reject?
 
     time_left = play.time_left
-    transmit({ time_left: "#{time_left}s remaining" })
+    transmit({time_left: "#{time_left}s remaining"})
 
     return if time_left > 1
 
     game.stop!(for_player: current_user)
-    transmit({ time_left: 0 })
+    transmit({time_left: 0})
   end
 
   def card(id)
@@ -47,7 +48,7 @@ class PlayChannel < ApplicationCable::Channel
   delegate :game, to: :play
 
   def play
-    Play.find_by(id: params[:id], user: current_user)
+    Play.find_by!(id: params[:id], user: current_user)
   end
 
   def reject?

@@ -7,9 +7,9 @@ class Play < ApplicationRecord
   has_many :answers
 
   enum status: {
-    ready: 'ready',
-    playing: 'playing',
-    stopped: 'stopped'
+    ready: "ready",
+    playing: "playing",
+    stopped: "stopped"
   }
 
   before_create do

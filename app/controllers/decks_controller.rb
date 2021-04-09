@@ -1,5 +1,5 @@
 class DecksController < ApplicationController
-  before_action :set_deck, only: %i[ show edit update destroy ]
+  before_action :set_deck, only: %i[show edit update destroy]
 
   def index
     @decks = Deck.all
@@ -50,11 +50,12 @@ class DecksController < ApplicationController
   end
 
   private
-    def set_deck
-      @deck = Deck.find(params[:id])
-    end
 
-    def deck_params
-      params.require(:deck).permit(:name, :difficulty)
-    end
+  def set_deck
+    @deck = Deck.find(params[:id])
+  end
+
+  def deck_params
+    params.require(:deck).permit(:name, :difficulty)
+  end
 end

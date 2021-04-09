@@ -6,7 +6,8 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @game = Game.new
@@ -17,7 +18,7 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.create_with_player!(current_user)
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
+        format.html { redirect_to @game, notice: "Game was successfully created." }
         format.json { render :show, status: :created, location: @game }
       else
         format.html { render :new, status: :unprocessable_entity }

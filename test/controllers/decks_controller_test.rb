@@ -16,8 +16,8 @@ class DecksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create deck" do
-    assert_difference('Deck.count') do
-      post decks_url, params: { deck: { difficulty: @deck.difficulty, name: @deck.name } }
+    assert_difference("Deck.count") do
+      post decks_url, params: {deck: {difficulty: @deck.difficulty, name: @deck.name}}
     end
 
     assert_redirected_to deck_url(Deck.last)
@@ -34,12 +34,12 @@ class DecksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update deck" do
-    patch deck_url(@deck), params: { deck: { difficulty: @deck.difficulty, name: @deck.name } }
+    patch deck_url(@deck), params: {deck: {difficulty: @deck.difficulty, name: @deck.name}}
     assert_redirected_to deck_url(@deck)
   end
 
   test "should destroy deck" do
-    assert_difference('Deck.count', -1) do
+    assert_difference("Deck.count", -1) do
       delete deck_url(@deck)
     end
 

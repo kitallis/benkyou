@@ -1,8 +1,8 @@
-require 'test_helper'
+require "test_helper"
 
 class GameTest < ActiveSupport::TestCase
-  describe '#questions' do
-    it 'returns cards IDs and the question' do
+  describe "#questions" do
+    it "returns cards IDs and the question" do
       game = create_game
       deck = create_deck
       cards = create_cards(deck)
@@ -16,7 +16,7 @@ class GameTest < ActiveSupport::TestCase
       expect(game.questions.sort).must_equal expected.sort
     end
 
-    it 'returns cards for both normal and inverted decks' do
+    it "returns cards for both normal and inverted decks" do
       game = create_game
       regular_deck = create_deck
       regular_cards = create_cards(regular_deck)
@@ -36,7 +36,7 @@ class GameTest < ActiveSupport::TestCase
     end
   end
 
-  describe '#start' do
+  describe "#start" do
     it "updates the game status to 'playing'" do
       game = create_game
 
@@ -55,18 +55,18 @@ class GameTest < ActiveSupport::TestCase
   private
 
   def create_deck
-    Deck.create!(name: 'MAD')
+    Deck.create!(name: "MAD")
   end
 
   def create_cards(deck)
     [
-      Card.create!(front: 'A', back: 'B', deck: deck),
-      Card.create!(front: 'X', back: 'Y', deck: deck)
+      Card.create!(front: "A", back: "B", deck: deck),
+      Card.create!(front: "X", back: "Y", deck: deck)
     ]
   end
 
   def create_game(status = :created)
-    Game.create!(name: 'Spy vs Spy', length: 100, status: status)
+    Game.create!(name: "Spy vs Spy", length: 100, status: status)
   end
 
   def create_game_deck(game, deck, inverted = false)

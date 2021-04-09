@@ -8,9 +8,9 @@ class Game < ApplicationRecord
   has_many :users, through: :plays
 
   enum status: {
-    created: 'created',
-    playing: 'playing',
-    stopped: 'stopped'
+    created: "created",
+    playing: "playing",
+    stopped: "stopped"
   }
 
   before_create do
