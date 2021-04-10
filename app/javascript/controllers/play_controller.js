@@ -3,7 +3,7 @@ import consumer from 'channels/consumer'
 import Rails from '@rails/ujs'
 
 export default class extends Controller {
-  static targets = ["timeLeft", "playForm"];
+  static targets = ['timeLeft', 'playForm'];
 
   connect () {
     this.channel = consumer.subscriptions.create(
@@ -41,7 +41,7 @@ export default class extends Controller {
   }
 
   updateTimeLeft (data) {
-    this.timeLeftTarget.setAttribute("value", data.time_left_perc)
+    this.timeLeftTarget.setAttribute('value', data.time_left_perc)
   }
 
   hasPlayEnded (data) {
@@ -49,12 +49,12 @@ export default class extends Controller {
   }
 
   finishPlay () {
-    alert('Game has ended!')
+    window.alert('Game has ended!')
     this.unsubscribe()
     this.submit()
   }
 
-  submit() {
+  submit () {
     Rails.fire(this.playFormTarget, 'submit')
   }
 

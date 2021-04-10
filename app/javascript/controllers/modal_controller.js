@@ -1,14 +1,14 @@
-import {Controller} from "stimulus"
+import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ["modal"]
+  static targets = ['modal']
 
-  open() {
+  open () {
     this.modalTarget.classList.add('is-active')
     return false
   }
 
-  close() {
+  close () {
     this.modalTarget.classList.remove('is-active')
     return false
   }

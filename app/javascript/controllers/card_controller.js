@@ -1,8 +1,8 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ["card", "cards"]
-  static values = {index: Number}
+  static targets = ['card', 'cards']
+  static values = { index: Number }
 
   initialize () {
     console.log("INIT'd card")
@@ -43,7 +43,7 @@ export default class extends Controller {
     this.currentCard.focus()
   }
 
-  writeMode() {
+  writeMode () {
     this.currentCard.getElementsByClassName('attempt')[0].focus()
     return false
   }

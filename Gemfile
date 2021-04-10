@@ -17,7 +17,7 @@ gem "rails", "~> 6.1.3", ">= 6.1.3.1"
 gem "redis", "~> 4.0"
 gem "rexml"
 gem "sass-rails", ">= 6"
-gem 'pg'
+gem "pg"
 gem "stimulus-rails"
 gem "turbolinks", "~> 5"
 gem "webpacker", "~> 5.0"

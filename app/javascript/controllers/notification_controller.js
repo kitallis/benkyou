@@ -1,10 +1,10 @@
-import {Controller} from "stimulus"
+import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ["notification"]
+  static targets = ['notification']
 
-  kill() {
-    let element = this.notificationTarget
+  kill () {
+    const element = this.notificationTarget
     element.parentNode.remove()
   }
 }

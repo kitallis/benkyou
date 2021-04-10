@@ -10,12 +10,12 @@ user_list = {
 }
 password = "hunter2"
 users = if User.all.blank?
-          user_list.map do |name, email|
-            User.create!(full_name: name, email: email, password: password)
-          end
-        else
-          User.all
-        end
+  user_list.map do |name, email|
+    User.create!(full_name: name, email: email, password: password)
+  end
+else
+  User.all
+end
 
 # destroy existing non-user data
 GameDeck.delete_all

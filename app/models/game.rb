@@ -10,7 +10,7 @@ class Game < ApplicationRecord
   enum status: STATUSES
 
   validates :name, :length, presence: true
-  validates :length, numericality: { only_integer: true }
+  validates :length, numericality: {only_integer: true}
   validate :at_least_one_player?, on: [:create, :update]
   validate :at_least_one_game_deck?, on: [:create, :update]
 
