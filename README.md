@@ -1,24 +1,16 @@
-# README
+# Benkyou (勉強)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![hero](https://user-images.githubusercontent.com/50663/114281637-1337eb80-9a5d-11eb-9b47-0826a563f789.png)
 
-Things you may want to cover:
+Benkyou is a online flashcard organizer and a fun way to study with friends and compare scores!
 
-* Ruby version
+### How to use
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Login / Sign-up via Google
+- Take a look at the decks or create a new deck
+- Keep your deck names highly verbose
+- Add cards to the deck (like you would in Anki)
+- Create a game and select the cards you want to play with
+- Make generous use of emojis when naming games
+- Add players to your game
+- Start!
