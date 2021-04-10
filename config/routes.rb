@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :deck_search, only: [:index]
   resources :about, only: [:index]
 
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: {omniauth_callbacks: "users/omniauth_callbacks"}
 
   root to: "home#index"
 

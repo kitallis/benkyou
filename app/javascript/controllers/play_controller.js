@@ -51,6 +51,10 @@ export default class extends Controller {
   finishPlay () {
     alert('Game has ended!')
     this.unsubscribe()
+    this.submit()
+  }
+
+  submit() {
     Rails.fire(this.playFormTarget, 'submit')
   }
 

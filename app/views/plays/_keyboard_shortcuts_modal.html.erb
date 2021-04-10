@@ -1,0 +1,39 @@
+<div data-controller="modal">
+  <a data-action="modal#open"><span class="icon"><i class="fas fa-keyboard"></i></span></a>
+
+  <div class="modal" data-modal-target="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Keyboard Shortcuts</p>
+        <button class="delete" aria-label="close" data-action="modal#close"></button>
+      </header>
+
+      <section class="modal-card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Shortcut</th>
+            <th colspan="1"></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td>ctrl-enter / cmd-enter</td>
+            <td>submit all answers</td>
+          </tr>
+          <tr>
+            <td>left</td>
+            <td>go to the previous card</td>
+          </tr>
+          <tr>
+            <td>right</td>
+            <td>go to the next card</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</div>

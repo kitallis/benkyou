@@ -10,12 +10,17 @@ class Game < ApplicationRecord
   enum status: STATUSES
 
   validates :name, :length, presence: true
-  validates :length, numericality: { only_integer: true }
+  validates :length, numericality: {only_integer: true}
   validate :at_least_one_player?, on: [:create, :update]
   validate :at_least_one_game_deck?, on: [:create, :update]
 
   def players
     plays.includes(:user).map(&:user)
+  end
+
+  def winner
+    return [] unless game.stopped?
+    plays.max(&:score).user
   end
 
   def plays_over?

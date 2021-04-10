@@ -1,27 +1,6 @@
 <h1 class="title"><%= @game.name %></h1>
 
-<% if @game.stopped? %>
-  <span class="icon has-text-danger-dark">
-    <i class="fas fa-2x fa-th-large"></i>
-  </span>
-
-  <strong>Game completed</strong>
-<% elsif @game.started? %>
-  <p>
-      <span class="icon is-medium has-text-success">
-    <i class="fas fa-2x fa-th-large"></i>
-  </span>
-
-  <h4 class="subtitle is-4">Game in progress</h4>
-  </p>
-
-<% else %>
-  <span class="icon has-text-info">
-    <i class="fas fa-2x fa-th-large"></i>
-  </span>
-
-  <strong>Ready</strong>
-<% end %>
+<%= render partial: 'game_status' %>
 
 <table class="table">
   <thead>
@@ -30,6 +9,8 @@
     <th>Name</th>
     <th>Email</th>
     <th>Status</th>
+    <th>Score</th>
+    <th colspan="1"></th>
   </tr>
   </thead>
 
@@ -49,7 +30,9 @@
       </td>
       <td><%= player.full_name %></td>
       <td><%= player.email %></td>
-      <td>Active</td>
+      <td><%= @game.plays.find_by(user: player).status %></td>
+      <td><%= @game.plays.find_by(user: player).score %></td>
+      <td><span class="icon"><i class="fas fa-trophy"></i></span></td>
     </tr>
   <% end %>
   </tbody>
@@ -60,7 +43,7 @@
 <% end %>
 
 <% if @game.started? && @play.started? %>
-  <%= link_to 'Continue playing...', game_play_path(@game, @play.id) %>
+  <%= link_to 'Continue playing', game_play_path(@game, @play.id), class: "button is-link" %>
 <% end %>
 
 <% if @game.created? %>

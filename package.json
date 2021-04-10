@@ -9,6 +9,7 @@
     "autocomplete.js": "^0.38.0",
     "mustache": "^4.2.0",
     "stimulus": "^2.0.0",
+    "stimulus-hotkeys": "^1.0.3",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",

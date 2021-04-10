@@ -6,7 +6,7 @@ user_list = {
   "Ragini Vijay": "gin@mailinator.com",
   "Sagarika Padha": "pop@mailinator.com",
   "Aarika Solanki": "aariks@mailinator.com",
-  "Andrea": "andrea@mailinator.com",
+  "Andrea": "andrea@mailinator.com"
 }
 password = "hunter2"
 users = if User.all.blank?

@@ -14,7 +14,7 @@ class Play < ApplicationRecord
     result = cards.map do |card|
       {
         card: card,
-        attempted_answer: attempted_answers.find { |a| a.card.eq?(card) }
+        attempted_answer: attempted_answers.find { |a| a.card.eql?(card) }
       }
     end
 
@@ -38,7 +38,6 @@ class Play < ApplicationRecord
   def time_left_perc
     100.0 * time_left / game.length
   end
-
 
   def time_left
     game.length - time_elapsed

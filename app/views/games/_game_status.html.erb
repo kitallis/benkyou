@@ -1,0 +1,24 @@
+<div class="block">
+  <% if @game.stopped? %>
+  <span class="ml-3 icon has-text-danger-dark">
+       <i class="fas fa-3x fa-th-large"></i>
+     </span>
+
+    <br/>
+    <h4 class="subtitle is-4">Finished</h4>
+  <% elsif @game.started? %>
+  <span class="ml-3 icon is-medium has-text-success">
+      <i class="fas fa-3x fa-th-large"></i>
+    </span>
+
+    <br/>
+    <h4 class="subtitle is-4">In progress</h4>
+  <% else %>
+  <span class="ml-3 icon has-text-info">
+      <i class="fas fa-3x fa-th-large"></i>
+    </span>
+
+    <br/>
+    <h4 class="subtitle is-4">Ready</h4>
+  <% end %>
+</div>

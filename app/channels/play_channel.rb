@@ -36,10 +36,10 @@ class PlayChannel < ApplicationCable::Channel
 
     if play.time_up?
       play.time_up!
-      transmit({ time_left_perc: 0.0 })
+      transmit({time_left_perc: 0.0})
       stop_stream_for(play)
     else
-      transmit({ time_left_perc: play.time_left_perc })
+      transmit({time_left_perc: play.time_left_perc})
     end
   end
 

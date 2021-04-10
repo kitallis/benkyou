@@ -3,35 +3,48 @@
 <% if @game.stopped? %>
   <strong>(GAME IS FINISHED)</strong>
 <% else %>
-  <div id="play" data-controller="play" data-play-id="<%= @play.id %>">
+  <div id="play" data-controller="play hotkeys" data-play-id="<%= @play.id %>" data-hotkeys-bindings-value='{"ctrl+enter, cmd+enter": "#play->play#submit"}'>
     <progress data-play-target="timeLeft" class="progress is-small is-primary" max="100">15%</progress>
 
-    <strong>(started)</strong>
+    <%= render partial: "keyboard_shortcuts_modal" %>
 
     <%= form_with url: game_play_answers_path(@game, @play), data: { play_target: "playForm" } do |form| %>
-      <%= form.submit "Done" %>
-
-      <div data-controller="card" data-play-index-value="1">
-        <a data-action="card#previous">←</a>
-        <a data-action="card#next">→</a>
-
-        <% @questions.each do |question| %>
-          <div data-card-target="card" data-card-id="<%= card(question).id %>">
-            <div class="field">
-              <label class="label"><%= question(question) %></label>
-              <div class="control">
-                <%= form.text_field(:attempt, {
-                  name: "answers[]",
-                  class: "input",
-                  type: "text",
-                  placeholder: "Answer",
-                  value: attempted_answer(question) }) %>
-
-                <%= form.hidden_field "card_ids[]", value: card(question).id %>
+      <div id="cards" data-controller="card hotkeys" data-hotkeys-bindings-value='{"left": "#cards->card#previous", "right": "#cards->card#next"}' data-play-index-value="1">
+        <div class="block">
+          <% @questions.each do |question| %>
+            <div class="card" data-card-target="card" data-card-id="<%= card(question).id %>">
+              <div class="card-content">
+                <div class="columns is-centered">
+                  <div class="column has-text-centered is-2">
+                    <p class="is-size-1">
+                      <%= question(question) %>
+                    </p>
+                  </div>
+                </div>
               </div>
+
+              <hr class="navbar-divider">
+
+              <footer class="card-content">
+                <div class="columns is-centered">
+                  <div class="column has-text-centered is-2">
+                    <p class="is-size-5">
+                      <%= form.text_field(:attempt, {
+                        name: "answers[]",
+                        class: "input",
+                        type: "text",
+                        placeholder: "Answer",
+                        value: attempted_answer(question) }) %>
+
+                      <%= form.hidden_field "card_ids[]", value: card(question).id %>
+                    </p>
+                  </div>
+                </div>
+              </footer>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
+        <%= form.submit "Done", class: "button is-link" %>
       </div>
     <% end %>
   </div>

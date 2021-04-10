@@ -21,7 +21,7 @@ gem "sqlite3", "~> 1.4"
 gem "stimulus-rails"
 gem "turbolinks", "~> 5"
 gem "webpacker", "~> 5.0"
-gem 'font-awesome-sass'
+gem "font-awesome-sass"
 
 group :development, :test do
   gem "standard"

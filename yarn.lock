@@ -940,10 +940,22 @@
   dependencies:
     "@stimulus/mutation-observers" "^2.0.0"
 
+"@stimulus/core@https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/core.tar.gz":
+  "integrity" "sha512-KLi0yJ/cTCGD4A+rlubVavxmQkOupJXG7m+cwYKERC0v+ADFU1QkxwlZPWasnmwC6o6cwbP0PuZUg4zAywJ/og=="
+  "resolved" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/core.tar.gz"
+  "version" "1.1.1"
+  dependencies:
+    "@stimulus/mutation-observers" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/mutation-observers.tar.gz"
+
 "@stimulus/multimap@^2.0.0":
   "integrity" "sha512-pMBCewkZCFVB3e5mEMoyO9+9aKzHDITmf3OnPun51YWxlcPdHcwbjqm1ylK63fsoduIE+RowBpFwFqd3poEz4w=="
   "resolved" "https://registry.npmjs.org/@stimulus/multimap/-/multimap-2.0.0.tgz"
   "version" "2.0.0"
+
+"@stimulus/multimap@https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/multimap.tar.gz":
+  "integrity" "sha512-8hGa8+ZFM37D4xDkcyVBd5cfU+6GUNo1JkGGzGWL+A1+H3xbBPLW5FmMyEQqPanuWIMkQ3rNJNwMgAvAbmHN5w=="
+  "resolved" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/multimap.tar.gz"
+  "version" "1.1.1"
 
 "@stimulus/mutation-observers@^2.0.0":
   "integrity" "sha512-kx4VAJdPhIGBQKGIoUDC2tupEKorG3A+ckc2b1UiwInKTMAC1axOHU8ebcwhaJIxRqIrs8//4SJo9YAAOx6FEg=="
@@ -952,10 +964,22 @@
   dependencies:
     "@stimulus/multimap" "^2.0.0"
 
+"@stimulus/mutation-observers@https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/mutation-observers.tar.gz":
+  "integrity" "sha512-n3xeuot2W+VCBfoMkvNqH2I10enbCS0scimRVBrEjl5xX9UaNMQjRs0rCr8WtZfKx2qZCbmGthj7Gf9CF9apyw=="
+  "resolved" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/mutation-observers.tar.gz"
+  "version" "1.1.1"
+  dependencies:
+    "@stimulus/multimap" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/multimap.tar.gz"
+
 "@stimulus/webpack-helpers@^2.0.0":
   "integrity" "sha512-D6tJWsAC024MwGEIKlUVYU8Ln87mlrmiwHvYAjipg+s8H4eLxUMQ3PZkWyPevfipH+oR3leuHsjYsK1gN5ViQA=="
   "resolved" "https://registry.npmjs.org/@stimulus/webpack-helpers/-/webpack-helpers-2.0.0.tgz"
   "version" "2.0.0"
+
+"@stimulus/webpack-helpers@https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/webpack-helpers.tar.gz":
+  "integrity" "sha512-tJ2V4xwE3GDjQ5i805GUEgXh16QlGxoPTvfmhHn6cUlEDmntfI04ES6uIHcpPeNwfk3STnCdKJFlLIU69/d5Lg=="
+  "resolved" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/webpack-helpers.tar.gz"
+  "version" "1.1.1"
 
 "@types/glob@^7.1.1":
   "integrity" "sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w=="
@@ -3919,6 +3943,11 @@
   "integrity" "sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg=="
   "resolved" "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.8.8.tgz"
   "version" "2.8.8"
+
+"hotkeys-js@^3.8.1":
+  "integrity" "sha512-rUmoryG4lEAtkjF5tcYaihrVoE86Fdw1BLqO/UiBWOOF56h32a6ax8oV4urBlinVtNNtArLlBq8igGfZf2tQnw=="
+  "resolved" "https://registry.npmjs.org/hotkeys-js/-/hotkeys-js-3.8.3.tgz"
+  "version" "3.8.3"
 
 "hpack.js@^2.1.6":
   "integrity" "sha1-h3dMCUnlE/QuhFdbPEVoH63ioLI="
@@ -7631,6 +7660,14 @@
   dependencies:
     "readable-stream" "^2.0.1"
 
+"stimulus-hotkeys@^1.0.3":
+  "integrity" "sha512-4FsXUzTc8sY6CKKK4qyQ8FlEGEregXK15TZb3Sj+dbTPQ+1hMALBLi9AAuw4QCepKQlvo4bgYKz7gH/o/D7ZDA=="
+  "resolved" "https://registry.npmjs.org/stimulus-hotkeys/-/stimulus-hotkeys-1.0.3.tgz"
+  "version" "1.0.3"
+  dependencies:
+    "hotkeys-js" "^3.8.1"
+    "stimulus" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/stimulus.tar.gz"
+
 "stimulus@^2.0.0":
   "integrity" "sha512-xipy7BS5TVpg4fX6S8LhrYZp7cmHGjmk09WSAiVx1gF5S5g43IWsuetfUhIk8HfHUG+4MQ9nY0FQz4dRFLs/8w=="
   "resolved" "https://registry.npmjs.org/stimulus/-/stimulus-2.0.0.tgz"
@@ -7638,6 +7675,14 @@
   dependencies:
     "@stimulus/core" "^2.0.0"
     "@stimulus/webpack-helpers" "^2.0.0"
+
+"stimulus@https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/stimulus.tar.gz":
+  "integrity" "sha512-Om0FeD1beu3CZ1ybsxZpcd2j0ctc+fE8rH8+ffxSsNM72oGeIKw5ilduLYespy1xIRSO6Fa9tZaZu2muefwQAQ=="
+  "resolved" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/stimulus.tar.gz"
+  "version" "1.1.1"
+  dependencies:
+    "@stimulus/core" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/core.tar.gz"
+    "@stimulus/webpack-helpers" "https://github.com/stimulusjs/dev-builds/archive/b8cc8c4/@stimulus/webpack-helpers.tar.gz"
 
 "stream-browserify@^2.0.1":
   "integrity" "sha512-nX6hmklHs/gr2FuxYDltq8fJA1GDlxKQCz8O/IM4atRqBH8OORmBNgfvW5gG10GT/qQ9u0CzIvr2X5Pkt6ntqg=="
