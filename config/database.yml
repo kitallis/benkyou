@@ -1,17 +1,18 @@
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
-  database: benykou_development
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: kitallis
-  password:
-  timeout: 5000
+
+development:
+  <<: *default
+  database: benkyou_development
 
 test:
-  adapter: postgresql
-  encoding: unicode
-  database: benykou_test
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  <<: *default
+  database: benkyou_test
+
+production:
+  <<: *default
+  database: benkyou_production
   username: kitallis
-  password:
-  timeout: 5000
+  password: <%= ENV['BENKYOU_DATABASE_PASSWORD'] %>
