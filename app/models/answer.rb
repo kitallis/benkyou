@@ -8,7 +8,15 @@ class Answer < ApplicationRecord
 
   delegate :game, to: :play
 
-  def correct?(attempt)
-    card.back.eql?(attempt)
+  before_save do
+    self.correct = correct?
+  end
+
+  def correct?
+    card.back.eql?(sanitize_attempt)
+  end
+
+  def sanitize_attempt
+    attempt.downcase.squish
   end
 end

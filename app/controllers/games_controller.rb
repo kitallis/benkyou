@@ -8,7 +8,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @players = @game.players
+    @plays = @game.plays
   end
 
   def new

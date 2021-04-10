@@ -15,7 +15,8 @@
   </thead>
 
   <tbody>
-  <% @players.each do |player| %>
+  <% @plays.each do |play| %>
+    <% player = play.player %>
     <tr>
       <td>
         <% if player.avatar_url.present? %>
@@ -30,9 +31,9 @@
       </td>
       <td><%= player.full_name %></td>
       <td><%= player.email %></td>
-      <td><%= @game.plays.find_by(user: player).status %></td>
-      <td><%= @game.plays.find_by(user: player).score %></td>
-      <td><span class="icon"><i class="fas fa-trophy"></i></span></td>
+      <td><%= status(play) %></td>
+      <td><%= points(play) %></td>
+      <td><%= trophy(play) %></td>
     </tr>
   <% end %>
   </tbody>

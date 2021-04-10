@@ -8,6 +8,7 @@ class Play < ApplicationRecord
   enum status: STATUSES.merge(time_up: "time_up")
 
   delegate :cards, to: :game
+  alias_method :player, :user
 
   def questions
     attempted_answers = answers.includes(:card).where(card: cards)
@@ -24,6 +25,11 @@ class Play < ApplicationRecord
 
   def score
     answers.correct.size
+  end
+
+  def winner?
+    return unless game.stopped?
+    score >= game.plays.map(&:score).max
   end
 
   # FIXME: this method is confusing
@@ -53,6 +59,7 @@ class Play < ApplicationRecord
     transaction do
       answers.create!(submissions)
       stop!
+      game.stop!
     end
   end
 

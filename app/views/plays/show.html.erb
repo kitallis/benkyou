@@ -8,8 +8,14 @@
 
     <%= render partial: "keyboard_shortcuts_modal" %>
 
+    <% controls = '{
+      "left": "#cards->card#previous",
+      "right": "#cards->card#next",
+      "w": "#cards->card#writeMode"
+    }' %>
+
     <%= form_with url: game_play_answers_path(@game, @play), data: { play_target: "playForm" } do |form| %>
-      <div id="cards" data-controller="card hotkeys" data-hotkeys-bindings-value='{"left": "#cards->card#previous", "right": "#cards->card#next"}' data-play-index-value="1">
+      <div id="cards" data-controller="card hotkeys" data-hotkeys-bindings-value="<%= controls %>" data-card-target="cards" data-play-index-value="1">
         <div class="block">
           <% @questions.each do |question| %>
             <div class="card" data-card-target="card" data-card-id="<%= card(question).id %>">
@@ -35,10 +41,10 @@
                         class: "attempt input",
                         type: "text",
                         placeholder: "Answer",
-                        tabindex: "1",
+                        tabindex: "-1",
                         value: attempted_answer(question) }) %>
 
-                    <div tabindex="2"></div>
+                      <div tabindex="1"></div>
 
                     <%= form.hidden_field "card_ids[]", value: card(question).id %>
                     </p>
