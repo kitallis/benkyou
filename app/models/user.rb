@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :plays
   has_many :games, through: :plays
 
-  scope :search, ->(term) { where("full_name LIKE ?", "%#{term}%") }
+  scope :search, ->(term) { where("full_name ILIKE ?", "%#{term}%") }
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

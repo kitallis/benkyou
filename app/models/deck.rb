@@ -1,7 +1,7 @@
 class Deck < ApplicationRecord
   has_many :cards
 
-  scope :search, ->(term) { where("name LIKE ?", "%#{term}%") }
+  scope :search, ->(term) { where("name ILIKE ?", "%#{term}%") }
 
   enum difficulty: {
     v_easy: "v_easy",
