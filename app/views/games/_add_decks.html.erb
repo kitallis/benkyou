@@ -1,0 +1,29 @@
+<div class="box">
+  <%= form.label "Add decks", class: "label" %>
+  <div data-controller="autocomplete" data-autocomplete-url="<%= deck_search_index_path %>">
+    <script data-autocomplete-target="suggestionTemplate" type="text/template">
+      <h2>{{name}}</h2>
+    </script>
+
+    <input data-autocomplete-target="field" class="input" placeholder="Type to search..."/>
+
+    <table class="table mt-2">
+      <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+      </thead>
+
+      <tbody data-autocomplete-target="selectionInsert">
+      <script data-autocomplete-target="selectionTemplate" type="text/template">
+        <tr>
+          <td data-autocomplete-target="insertedSelection" data-selected-id="{{id}}">
+            {{name}}
+            <input type="hidden" name="game[game_deck_ids][]" value="{{id}}" data-autocomplete-target="hidden" />
+          </td>
+        </tr>
+      </script>
+      </tbody>
+    </table>
+  </div>
+</div>

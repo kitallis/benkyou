@@ -1,4 +1,4 @@
-<h1 class="title">Games</h1>
+<h1 class="title">Your games</h1>
 
 <% if @games.exists? %>
   <table class="table">
@@ -25,3 +25,31 @@
 <% end %>
 
 <%= link_to 'New Game', new_game_path, class: "button is-black" %>
+
+<br/>
+<br/>
+<br/>
+
+<h1 class="title">Other active games</h1>
+
+<% if @other_games.exists? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @other_games.each do |game| %>
+      <tr>
+        <td><%= game.name %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="block">
+    No other games are active right now.
+  </p>
+<% end %>

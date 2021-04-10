@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :player_search, only: [:index]
+  resources :deck_search, only: [:index]
   resources :about, only: [:index]
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }

@@ -1,0 +1,33 @@
+<div class="box">
+  <%= form.label "Add players", class: "label" %>
+  <div data-controller="autocomplete" data-autocomplete-url="<%= player_search_index_path %>">
+    <script data-autocomplete-target="suggestionTemplate" type="text/template">
+      <figure class="image is-32x32" style="margin-right:.5em;">
+        <img src={{avatar_url}} />
+      </figure>
+      <h2>{{full_name}}</h2>
+      <p>{{email}}</p>
+    </script>
+
+    <input data-autocomplete-target="field" class="input" placeholder="Type to search..."/>
+
+    <table class="table mt-2">
+      <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+      </thead>
+
+      <tbody data-autocomplete-target="selectionInsert">
+      <script data-autocomplete-target="selectionTemplate" type="text/template">
+        <tr>
+          <td data-autocomplete-target="insertedSelection" data-selected-id="{{id}}">
+            {{full_name}}
+            <input type="hidden" name="game[user_ids][]" value="{{id}}" data-autocomplete-target="hidden" />
+          </td>
+        </tr>
+      </script>
+      </tbody>
+    </table>
+  </div>
+</div>

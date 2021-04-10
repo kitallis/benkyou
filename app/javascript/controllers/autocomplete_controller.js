@@ -27,7 +27,7 @@ export default class extends Controller {
     const suggestionTemplate = this.suggestionTemplateTarget.innerHTML;
     const selectionTemplate = this.selectionTemplateTarget.innerHTML;
 
-    autocomplete(this.fieldTarget, {hint: false}, [
+    autocomplete(this.fieldTarget, {hint: false, minLength: 3}, [
       {
         source: this.source(),
         debounce: 200,

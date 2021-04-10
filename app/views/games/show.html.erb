@@ -55,28 +55,10 @@
   </tbody>
 </table>
 
-<div class="search_bar">
-  <%= form_with(url: game_plays_path(@game), method: :post, local: true) do |form| %>
-    <%= content_tag :div, 'data-controller': "autocomplete", "data-autocomplete-url-value": game_player_search_index_path(@game) do %>
-      <label>Add Players</label>
-
-      <div class="field is-grouped">
-        <p class="control is-expanded">
-          <input type="text" placeholder="Search..." data-autocomplete-target="input"/>
-          <input type="hidden" name="user_id" data-autocomplete-target="hidden"/>
-        </p>
-      </div>
-
-      <%= tag :ul, 'data-autocomplete-target': 'results', class: 'list-group autocomplete' %>
-    <% end %>
-
-    <%= form.button "Add", name: nil %>
-  <% end %>
-</div>
-
 <% if !@game.stopped? && @play.created? %>
-  <%= link_to 'Start', start_game_path(@game), class: "button is-primary", method: :post %>
+  <%= link_to 'Start', start_game_path(@game), class: "button is-link", method: :post %>
 <% end %>
+
 <% if @game.started? && @play.started? %>
   <%= link_to 'Continue playing...', game_play_path(@game, @play.id) %>
 <% end %>

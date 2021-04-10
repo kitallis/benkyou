@@ -4,6 +4,7 @@ class GamesController < ApplicationController
 
   def index
     @games = Game.includes(:plays).where(plays: { user: current_user })
+    @other_games = Game.where.not(status: :stopped).where.not(id: @games).limit(10)
   end
 
   def show
@@ -16,9 +17,10 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+    @game.plays.build(user: current_user)
 
     respond_to do |format|
-      if @game.create_with_player!(current_user)
+      if @game.save
         format.html { redirect_to @game, notice: "Game was successfully created." }
         format.json { render :show, status: :created, location: @game }
       else
@@ -44,6 +46,6 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.require(:game).permit(:name, :length)
+    params.require(:game).permit(:name, :length, user_ids: [], game_deck_ids: [])
   end
 end

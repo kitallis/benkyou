@@ -1,8 +1,8 @@
 class Game < ApplicationRecord
   include State
 
-  has_many :game_decks
-  has_many :plays
+  has_many :game_decks, autosave: true
+  has_many :plays, autosave: true
   has_many :decks, through: :game_decks
   has_many :cards, through: :decks
   has_many :users, through: :plays
@@ -14,20 +14,8 @@ class Game < ApplicationRecord
   validate :at_least_one_player?, on: [:create, :update]
   validate :at_least_one_game_deck?, on: [:create, :update]
 
-  def create_with_player!(player)
-    transaction do
-      save!
-      add_player!(player)
-      true
-    end
-  end
-
   def players
     plays.includes(:user).map(&:user)
-  end
-
-  def add_player!(player)
-    plays.create!(user: player)
   end
 
   def plays_over?
