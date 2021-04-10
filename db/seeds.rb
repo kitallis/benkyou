@@ -10,12 +10,12 @@ user_list = {
 }
 password = "hunter2"
 users = if User.all.blank?
-  user_list.map do |name, email|
-    User.create!(full_name: name, email: email, password: password)
-  end
-else
-  User.all
-end
+          user_list.map do |name, email|
+            User.create!(full_name: name, email: email, password: password)
+          end
+        else
+          User.all
+        end
 
 # destroy existing non-user data
 GameDeck.delete_all
@@ -50,13 +50,18 @@ end
 # create games
 game_names = ["kit v nid", "pree v gin"]
 game_names.each do |name|
-  game = Game.create!(name: name, status: Game.statuses.values.sample, length: 5000)
+  game = Game.new(name: name, status: Game.statuses.values.sample, length: 5000)
 
-  [users.first, users.drop(1).sample(3)].flatten.each do |user|
-    Play.create!(game: game, user: user, status: Play.statuses.values.sample)
+  plays = [users.first, users.drop(1).sample(3)].flatten.map do |user|
+    Play.new(game: game, user: user, status: Play.statuses.values.sample)
   end
 
-  decks.each do |deck|
-    GameDeck.create!(deck: deck, game: game, inverted: [true, false].sample)
+  game_decks = decks.map do |deck|
+    GameDeck.new(deck: deck, game: game, inverted: [true, false].sample)
   end
+
+  game.game_decks = game_decks
+  game.plays = plays
+
+  game.save!
 end

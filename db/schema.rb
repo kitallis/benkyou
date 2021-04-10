@@ -12,11 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2021_04_09_131034) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "answers", force: :cascade do |t|
     t.string "attempt"
     t.boolean "correct"
-    t.integer "card_id", null: false
-    t.integer "play_id", null: false
+    t.bigint "card_id", null: false
+    t.bigint "play_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["card_id"], name: "index_answers_on_card_id"
@@ -26,7 +29,7 @@ ActiveRecord::Schema.define(version: 2021_04_09_131034) do
   create_table "cards", force: :cascade do |t|
     t.string "front"
     t.string "back"
-    t.integer "deck_id", null: false
+    t.bigint "deck_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["deck_id"], name: "index_cards_on_deck_id"
@@ -40,8 +43,8 @@ ActiveRecord::Schema.define(version: 2021_04_09_131034) do
   end
 
   create_table "game_decks", force: :cascade do |t|
-    t.integer "game_id", null: false
-    t.integer "deck_id", null: false
+    t.bigint "game_id", null: false
+    t.bigint "deck_id", null: false
     t.boolean "inverted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -60,8 +63,8 @@ ActiveRecord::Schema.define(version: 2021_04_09_131034) do
   create_table "plays", force: :cascade do |t|
     t.datetime "started_at"
     t.string "status", null: false
-    t.integer "game_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "game_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id", "user_id"], name: "index_plays_on_game_id_and_user_id", unique: true
