@@ -47,3 +47,5 @@ coverage
 .idea/
 .rubocop.yml
 config/spring.rb
+
+/config/credentials/production.key
