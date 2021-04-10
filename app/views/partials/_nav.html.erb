@@ -26,19 +26,15 @@
             </a>
 
             <div class="navbar-dropdown is-right">
-              <a class="navbar-item">
-              <span class="icon">
-                <i class="fa fa-fw fa-power-off"></i>
-              </span>
-                <span>
-                Logout
-              </span>
-              </a>
+              <%= link_to destroy_user_session_path, class: "navbar-item", method: :delete, rel: "nofollow" do %>
+                <span class="icon"><i class="fa fa-fw fa-power-off"></i></span>
+                <span>Logout</span>
+              <% end %>
             </div>
           </div>
         <% else %>
-          <div class="navbar-item is-arrowless">
-            <%= link_to "/users/auth/google_oauth2", class: "navbar-link", method: :post, rel: "nofollow" do %>
+          <div class="navbar-item">
+            <%= link_to "/users/auth/google_oauth2", class: "is-arrowless navbar-link button is-text", method: :post, rel: "nofollow" do %>
               Sign up • Login with Google
             <% end %>
           </div>
@@ -48,7 +44,5 @@
   </div>
 </header>
 
-<%#= link_to destroy_user_session_path, class: "button is-primary", method: :post, rel: "nofollow" do %>
-<!--  <strong>Logout</strong>-->
-<%# end %>
+
 <%# else %>
