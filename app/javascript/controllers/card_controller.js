@@ -5,7 +5,7 @@ export default class extends Controller {
   static values = {index: Number}
 
   initialize () {
-    console.log("INIT'd play")
+    console.log("INIT'd card")
     this.channel = document.querySelector('#play').play.subscription
   }
 
@@ -40,6 +40,11 @@ export default class extends Controller {
   indexValueChanged () {
     this.hideAllCards()
     this.currentCard.hidden = false
+    this.focusCurrentCardInput()
+  }
+
+  focusCurrentCardInput () {
+    this.currentCard.getElementsByClassName('attempt')[0].focus()
   }
 
   hideAllCards () {

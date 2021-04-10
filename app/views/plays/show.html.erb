@@ -27,16 +27,20 @@
 
               <footer class="card-content">
                 <div class="columns is-centered">
-                  <div class="column has-text-centered is-2">
-                    <p class="is-size-5">
-                      <%= form.text_field(:attempt, {
+                  <div class="column has-text-centered is-6">
+                    <p class="is-size-6">
+                      <%= form.text_area(:attempt, {
+                        id: "attempt-#{card(question).id}",
                         name: "answers[]",
-                        class: "input",
+                        class: "attempt input",
                         type: "text",
                         placeholder: "Answer",
+                        tabindex: "1",
                         value: attempted_answer(question) }) %>
 
-                      <%= form.hidden_field "card_ids[]", value: card(question).id %>
+                    <div tabindex="2"></div>
+
+                    <%= form.hidden_field "card_ids[]", value: card(question).id %>
                     </p>
                   </div>
                 </div>
