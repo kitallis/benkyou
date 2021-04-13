@@ -42,7 +42,7 @@ class Game < ApplicationRecord
     raise InvalidStatusChange if created?
     return if stopped?
 
-    update!(status: :stopped) if plays.all?(&:stopped?)
+    update!(status: :stopped) if plays.all? { |play| play.stopped? || play.time_up? }
   end
 
   private

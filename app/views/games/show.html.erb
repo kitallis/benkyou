@@ -47,7 +47,3 @@
 <% if @game.started? && @play.started? %>
   <%= link_to 'Continue playing', game_play_path(@game, @play.id), class: "button is-link" %>
 <% end %>
-
-<% if @game.created? %>
-  <%= link_to 'Edit', edit_game_path(@game), class: "button is-light" %>
-<% end %>

@@ -4,6 +4,12 @@ class PlayChannel < ApplicationCable::Channel
   def subscribed
     return reject if reject?
 
+    if play.time_up?
+      stream_for(play)
+      play_over
+      return reject
+    end
+
     play.start!
     stream_for(play)
   end
@@ -26,12 +32,16 @@ class PlayChannel < ApplicationCable::Channel
     return stop_stream_for(play) if reject?
 
     if play.time_up?
-      play.time_up!
-      transmit({ time_left_perc: 0.0 })
+      play_over
       stop_stream_for(play)
     else
       transmit({ time_left_perc: play.time_left_perc })
     end
+  end
+
+  def play_over
+    play.time_up!
+    transmit({ time_left_perc: 0.0 })
   end
 
   def card(id)
@@ -45,6 +55,6 @@ class PlayChannel < ApplicationCable::Channel
   end
 
   def reject?
-    play.blank? || play.finished?
+    play.blank? || play.stopped? || game.stopped?
   end
 end
