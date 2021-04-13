@@ -12,7 +12,7 @@ module GamesHelper
   end
 
   def trophy(play)
-    return unless play.winner?
+    return unless play.in?(@game.winners)
     tag.span(class: "icon") { tag.i class: "fas fa-trophy" }
   end
 end

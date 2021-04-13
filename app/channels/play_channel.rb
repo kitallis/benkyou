@@ -4,11 +4,11 @@ class PlayChannel < ApplicationCable::Channel
   def subscribed
     return reject if reject?
 
-    stream_for play
+    play.start!
+    stream_for(play)
   end
 
   def unsubscribed
-
   end
 
   def receive(data)
@@ -18,11 +18,7 @@ class PlayChannel < ApplicationCable::Channel
   def receive_answer(new_answer)
     return stop_stream_for(play) if play.time_up?
 
-    params = {
-      card_id: new_answer["cardId"].to_i,
-      attempt: new_answer["attempt"]
-    }
-
+    params = { card_id: new_answer["cardId"].to_i, attempt: new_answer["attempt"] }
     play.upsert_answer!(params)
   end
 

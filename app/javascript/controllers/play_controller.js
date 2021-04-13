@@ -34,6 +34,10 @@ export default class extends Controller {
   _connected () {}
   _disconnected () {}
 
+  disconnect () {
+    this.unsubscribe()
+  }
+
   checkPlayStatus (data) {
     if (this.hasPlayEnded(data)) {
       this.finishPlay()

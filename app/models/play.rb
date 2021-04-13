@@ -27,12 +27,6 @@ class Play < ApplicationRecord
     answers.correct.size
   end
 
-  def winner?
-    return unless game.stopped?
-    score >= game.plays.map(&:score).max
-  end
-
-  # FIXME: this method is confusing
   def finished?
     stopped? || game.stopped?
   end
@@ -55,6 +49,11 @@ class Play < ApplicationRecord
     Time.now.to_i - started_at.to_i
   end
 
+  def time_taken
+    return game.length if stopped_at.nil?
+    stopped_at.to_i - started_at.to_i
+  end
+
   def submit!(submissions)
     transaction do
       submissions.each { |s| upsert_answer!(s) }
@@ -72,21 +71,24 @@ class Play < ApplicationRecord
     answer.save!
   end
 
-  def play!
-    raise InvalidStatusChange unless created? || started?
+  def start!
+    raise InvalidStatusChange if finished? || time_up?
+    return if started?
 
-    update!(status: :started, started_at: Time.now)
+    transaction do
+      game.start!
+      update!(status: :started, started_at: Time.now)
+    end
   end
 
   def time_up!
-    raise InvalidStatusChange unless time_up? || started?
+    raise InvalidStatusChange if finished? || created?
+    return if time_up?
 
     update!(status: :time_up)
   end
 
   def stop!
-    raise InvalidStatusChange unless stopped? || started? || time_up?
-
-    update!(status: :stopped)
+    update!(status: :stopped, stopped_at: Time.current)
   end
 end

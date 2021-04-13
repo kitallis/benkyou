@@ -10,31 +10,37 @@ class Game < ApplicationRecord
   enum status: STATUSES
 
   validates :name, :length, presence: true
-  validates :length, numericality: {only_integer: true}
+  validates :length, numericality: { only_integer: true }
   validate :at_least_one_player?, on: [:create, :update]
   validate :at_least_one_game_deck?, on: [:create, :update]
+
+  def winners
+    return [] unless stopped?
+
+    play_info = plays.map { |play| [play, { score: play.score, time_taken: play.time_taken }] }.to_h
+    highest_score = play_info.values.flatten.map { |info| info[:score] }.max
+
+    highest_scorers = play_info.filter { |_, info| info[:score].eql?(highest_score) }
+    return highest_scorers.first if highest_scorers.size == 1
+
+    quickest = highest_scorers.values.flatten.map { |s| s[:time_taken] }.min
+    highest_scorers.filter { |_, info| info[:time_taken].eql?(quickest) }
+  end
 
   def players
     plays.includes(:user).map(&:user)
   end
 
-  def plays_over?
-    plays.all? { |play| play.time_up? || play.stopped? }
-  end
+  def start!
+    raise InvalidStatusChange if stopped?
+    return if started?
 
-  # This won't run into a race condition since the Game can go from 'playing' to 'playing'
-  # i.e. not break if the 'playing' status is re-applied during a game start by another player
-  def start!(for_player:)
-    raise InvalidStatusChange unless created? || started?
-
-    transaction do
-      plays.where(user: for_player).first.play!
-      update!(status: :started)
-    end
+    update!(status: :started)
   end
 
   def stop!
-    raise InvalidStatusChange unless stopped? || started?
+    raise InvalidStatusChange if created?
+    return if stopped?
 
     update!(status: :stopped) if plays.all?(&:stopped?)
   end
