@@ -63,9 +63,9 @@ class Play < ApplicationRecord
     end
   end
 
-  def upsert_answer!(answer_params)
-    attempt = answer_params[:attempt]
-    card_id = answer_params[:card_id]
+  def upsert_answer!(new_answer)
+    attempt = new_answer[:attempt]
+    card_id = new_answer[:card_id]
 
     answer = answers.find_or_initialize_by(card_id: card_id)
     answer.attempt = attempt

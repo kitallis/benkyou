@@ -15,12 +15,12 @@ class PlayChannel < ApplicationCable::Channel
     receive_answer(data["answer"])
   end
 
-  def receive_answer(answer_params)
+  def receive_answer(new_answer)
     return stop_stream_for(play) if play.time_up?
 
     params = {
-      card_id: answer_params["cardId"].to_i,
-      attempt: answer_params["attempt"]
+      card_id: new_answer["cardId"].to_i,
+      attempt: new_answer["attempt"]
     }
 
     play.upsert_answer!(params)

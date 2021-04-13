@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
   def create
     answer_params = card_attempt_pairs.map do |(card_id, attempt)|
       {
-        card_id: card_id,
+        card_id: card_id.to_i,
         attempt: attempt
       }
     end
