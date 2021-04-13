@@ -57,10 +57,19 @@ class Play < ApplicationRecord
 
   def submit!(submissions)
     transaction do
-      answers.create!(submissions)
+      submissions.each { |s| upsert_answer!(s) }
       stop!
       game.stop!
     end
+  end
+
+  def upsert_answer!(answer_params)
+    attempt = answer_params[:attempt]
+    card_id = answer_params[:card_id]
+
+    answer = answers.find_or_initialize_by(card_id: card_id)
+    answer.attempt = attempt
+    answer.save!
   end
 
   def play!

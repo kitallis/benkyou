@@ -8,27 +8,22 @@ class PlayChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
+
   end
 
   def receive(data)
-    receive_answers(data["answers"])
+    receive_answer(data["answer"])
   end
 
-  def receive_answers(answers)
+  def receive_answer(answer_params)
     return stop_stream_for(play) if play.time_up?
 
-    answers.each do |answer|
-      card_id = answer["cardId"].to_i
-      attempt = answer["value"]
+    params = {
+      card_id: answer_params["cardId"].to_i,
+      attempt: answer_params["attempt"]
+    }
 
-      answer = play.answers.find_by(card: card(card_id))
-
-      if answer.present?
-        answer.update!(attempt: attempt)
-      else
-        play.answers.create!(card: card(card_id), attempt: attempt)
-      end
-    end
+    play.upsert_answer!(params)
   end
 
   def transmit_remaining_time
@@ -36,10 +31,10 @@ class PlayChannel < ApplicationCable::Channel
 
     if play.time_up?
       play.time_up!
-      transmit({time_left_perc: 0.0})
+      transmit({ time_left_perc: 0.0 })
       stop_stream_for(play)
     else
-      transmit({time_left_perc: play.time_left_perc})
+      transmit({ time_left_perc: play.time_left_perc })
     end
   end
 

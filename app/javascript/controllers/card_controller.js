@@ -34,7 +34,7 @@ export default class extends Controller {
   }
 
   updateAnswer () {
-    this.channel.send({ answers: [this.stateFor(this.previousCard)] })
+    this.channel.send({ answer: this.stateFor(this.previousCard) })
   }
 
   indexValueChanged () {
@@ -67,7 +67,7 @@ export default class extends Controller {
   stateFor (card) {
     return {
       cardId: card.dataset.cardId,
-      value: card.querySelector('.input').value
+      attempt: card.querySelector('.input').value
     }
   }
 }
