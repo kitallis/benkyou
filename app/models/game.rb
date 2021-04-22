@@ -10,7 +10,7 @@ class Game < ApplicationRecord
   enum status: STATUSES
 
   validates :name, :length, presence: true
-  validates :length, numericality: { only_integer: true }
+  validates :length, numericality: {only_integer: true}
   validate :at_least_one_player?, on: [:create, :update]
   validate :at_least_one_game_deck?, on: [:create, :update]
 
@@ -19,7 +19,7 @@ class Game < ApplicationRecord
   def winners
     return [] unless stopped?
 
-    play_info = plays.map { |play| [play, { score: play.score, time_taken: play.time_taken }] }.to_h
+    play_info = plays.map { |play| [play, {score: play.score, time_taken: play.time_taken}] }.to_h
     highest_score = play_info.values.flatten.map { |info| info[:score] }.max
 
     highest_scorers = play_info.filter { |_, info| info[:score].eql?(highest_score) }

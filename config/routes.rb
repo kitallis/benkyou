@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   end
 
   resources :decks do
+    member do
+      post :import
+    end
+
     resources :cards
   end
 

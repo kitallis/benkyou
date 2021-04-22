@@ -4,11 +4,11 @@ class GamesController < ApplicationController
 
   def index
     @games = Game
-               .includes(:plays)
-               .where(plays: {user: current_user})
-               .order(created_at: :desc)
-               .page(params[:page])
-    @other_games = Game.where.not(status: :stopped).where.not(id: @games).limit(10)
+      .includes(:plays)
+      .where(plays: {user: current_user})
+      .order(created_at: :desc)
+      .page(params[:page])
+    @other_games = Game.where.not(status: :stopped).where.not(id: @games).limit(5)
   end
 
   def show

@@ -1,12 +1,15 @@
 class DecksController < ApplicationController
-  before_action :set_deck, only: %i[show edit update destroy]
+  include FileImportable
+  include ApplicationHelper
+
+  before_action :set_deck, only: %i[show edit update destroy import]
+  before_action :set_cards, only: %i[show import]
 
   def index
     @decks = Deck.all.page(params[:page])
   end
 
   def show
-    @cards = @deck.cards.page(params[:page])
   end
 
   def new
@@ -50,10 +53,32 @@ class DecksController < ApplicationController
     end
   end
 
+  def import
+    initialize_import
+    validate_file_type
+    validate_file_size
+
+    return render :show, status: :bad_request if @errors.present?
+
+    @deck.with_import!(@file) do |importer|
+      if importer.report.success?
+        redirect_to @deck, notice: importer.report.message
+      else
+        @errors << importer.report.message
+        @errors.each { |e| flash_message "alert", e }
+        render :show, status: :bad_request, location: @deck
+      end
+    end
+  end
+
   private
 
   def set_deck
     @deck = Deck.find(params[:id])
+  end
+
+  def set_cards
+    @cards = @deck.cards.page(params[:page])
   end
 
   def deck_params

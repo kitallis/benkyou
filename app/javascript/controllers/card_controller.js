@@ -49,7 +49,7 @@ export default class extends Controller {
   }
 
   hideAllCards () {
-    this.cardTargets.forEach(element => element.hidden = true)
+    this.cardTargets.forEach(element => { element.hidden = true })
   }
 
   totalCards () {

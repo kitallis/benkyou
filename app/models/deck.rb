@@ -14,4 +14,18 @@ class Deck < ApplicationRecord
   validates :name, :difficulty, presence: true
 
   paginates_per 10
+
+  def with_import!(file)
+    options = { content: file.read(encoding: "SJIS:UTF-8"), encoding: "SJIS:UTF-8" }
+
+    importer = Importers::Card.new(options) do
+      after_build do |card|
+        card.deck = self
+      end
+    end
+
+    importer.run!
+
+    yield(importer)
+  end
 end

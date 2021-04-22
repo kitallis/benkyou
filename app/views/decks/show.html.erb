@@ -40,5 +40,32 @@
 
 <%= paginate @cards %>
 
-<%= link_to "New Card", new_deck_card_path(@deck), class: "button is-black" %>
-<%= link_to 'Edit Deck', edit_deck_path(@deck), class: "button is-light" %>
+<div class="block">
+  <%= link_to "New Card", new_deck_card_path(@deck), class: "button is-black" %>
+  <%= link_to 'Edit Deck', edit_deck_path(@deck), class: "button is-light" %>
+</div>
+
+<div class="block" data-controller="file-input">
+  <%= form_with(url: import_deck_path(@deck), multipart: true) do |form| %>
+    <div class="file block is-normal has-name">
+      <div class="columns is-1 is-variable">
+        <div class="column">
+          <label class="file-label">
+            <%= form.file_field :file, class: "file-input", required: true, accept: '.csv', 'data-action': "file-input#updateSelectedFile" %>
+            <span class="file-cta"><span class="file-icon"><i class="fas fa-upload"></i></span>
+              <span class="file-label">Select a CSV file to bulk import cards</span>
+            </span>
+            <span class="file-name" data-file-input-target="file">Screen Shot 2017-07-29 at 15.54.25.png</span>
+          </label>
+        </div>
+
+        <div class="column">
+          <button class="button is-success">
+            <span class="icon is-small"><i class="fas fa-check"></i></span>
+            <span>Import</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

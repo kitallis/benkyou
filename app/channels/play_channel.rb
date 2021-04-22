@@ -24,7 +24,7 @@ class PlayChannel < ApplicationCable::Channel
   def receive_answer(new_answer)
     return stop_stream_for(play) if play.time_up?
 
-    params = { card_id: new_answer["cardId"].to_i, attempt: new_answer["attempt"] }
+    params = {card_id: new_answer["cardId"].to_i, attempt: new_answer["attempt"]}
     play.upsert_answer!(params)
   end
 
@@ -35,13 +35,13 @@ class PlayChannel < ApplicationCable::Channel
       play_over
       stop_stream_for(play)
     else
-      transmit({ time_left_perc: play.time_left_perc })
+      transmit({time_left_perc: play.time_left_perc})
     end
   end
 
   def play_over
     play.time_up!
-    transmit({ time_left_perc: 0.0 })
+    transmit({time_left_perc: 0.0})
   end
 
   def card(id)
