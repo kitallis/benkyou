@@ -1,5 +1,5 @@
 class Deck < ApplicationRecord
-  has_many :cards
+  has_many :cards, dependent: :delete_all
 
   scope :search, ->(term) { where("name ILIKE ?", "%#{term}%") }
 
