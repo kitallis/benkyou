@@ -44,7 +44,7 @@
                         tabindex: "-1",
                         value: attempted_answer(question) }) %>
 
-                      <div tabindex="1"></div>
+                    <div tabindex="1"></div>
 
                     <%= form.hidden_field "card_ids[]", value: card(question).id %>
                     </p>
@@ -54,7 +54,27 @@
             </div>
           <% end %>
         </div>
-        <%= form.submit "Done", class: "button is-link" %>
+
+        <nav class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <button type="submit" name="commit" class="button is-success" data-disable-with="Finish ">
+                <span class="icon is-small"><i class="fas fa-check"></i></span>
+                <span>Finish</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="level-right">
+            <button type="button" class="button" data-action="card#previous">
+              <span class="icon is-small"><i class="fas fa-arrow-circle-left"></i></span>
+            </button>
+
+            <button type="button" class="button" data-action="card#next">
+              <span class="icon is-small"><i class="fas fa-arrow-circle-right"></i></span>
+            </button>
+          </div>
+        </nav>
       </div>
     <% end %>
   </div>
