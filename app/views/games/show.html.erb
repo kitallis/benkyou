@@ -1,4 +1,5 @@
 <h1 class="title"><%= @game.name %></h1>
+<div></div>
 
 <%= render partial: 'game_status' %>
 
@@ -39,6 +40,33 @@
   <% end %>
   </tbody>
 </table>
+
+<br/>
+<br/>
+
+<% if @game.stopped? %>
+  <h2 class="title">Your answers</h2>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Front</th>
+      <th>Back</th>
+      <th>Your Answer</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @plays.find_by(user: current_user).answers.each do |answer| %>
+      <tr>
+        <td><%= answer.card.front %></td>
+        <td><%= answer.card.back %></td>
+        <td><%= answer.attempt %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
 
 <% if !@game.stopped? && @play.created? %>
   <%= link_to 'Start', start_game_path(@game), class: "button is-link", method: :post %>
