@@ -1,24 +1,13 @@
 <div class="block">
+  <span class="tag is-light">Created on <%= made_on(@game) %></span>
   <% if @game.stopped? %>
-  <span class="ml-3 icon has-text-danger-dark">
-       <i class="fas fa-3x fa-th-large"></i>
-     </span>
-
+    <span class="tag is-danger">Finished</span>
     <br/>
-    <h4 class="subtitle is-4">Finished</h4>
   <% elsif @game.started? %>
-  <span class="ml-3 icon is-medium has-text-success">
-      <i class="fas fa-3x fa-th-large"></i>
-    </span>
-
+    <span class="tag is-success">In Progress</span>
     <br/>
-    <h4 class="subtitle is-4">In progress</h4>
   <% else %>
-  <span class="ml-3 icon has-text-info">
-      <i class="fas fa-3x fa-th-large"></i>
-    </span>
-
+    <span class="tag is-info">Ready</span>
     <br/>
-    <h4 class="subtitle is-4">Ready</h4>
   <% end %>
 </div>

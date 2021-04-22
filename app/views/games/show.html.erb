@@ -1,5 +1,4 @@
 <h1 class="title"><%= @game.name %></h1>
-<div></div>
 
 <%= render partial: 'game_status' %>
 
@@ -40,9 +39,6 @@
   <% end %>
   </tbody>
 </table>
-
-<br/>
-<br/>
 
 <% if @game.stopped? %>
   <h2 class="title">Your answers</h2>

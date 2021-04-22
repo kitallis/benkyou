@@ -6,6 +6,7 @@ class GamesController < ApplicationController
     @games = Game
                .includes(:plays)
                .where(plays: {user: current_user})
+               .order(created_at: :desc)
                .page(params[:page])
     @other_games = Game.where.not(status: :stopped).where.not(id: @games).limit(10)
   end
