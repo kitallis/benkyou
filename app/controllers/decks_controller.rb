@@ -2,10 +2,11 @@ class DecksController < ApplicationController
   before_action :set_deck, only: %i[show edit update destroy]
 
   def index
-    @decks = Deck.all
+    @decks = Deck.all.page(params[:page])
   end
 
   def show
+    @cards = @deck.cards.page(params[:page])
   end
 
   def new

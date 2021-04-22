@@ -14,6 +14,8 @@ class Game < ApplicationRecord
   validate :at_least_one_player?, on: [:create, :update]
   validate :at_least_one_game_deck?, on: [:create, :update]
 
+  paginates_per 10
+
   def winners
     return [] unless stopped?
 

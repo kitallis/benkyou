@@ -12,4 +12,6 @@ class Deck < ApplicationRecord
   }
 
   validates :name, :difficulty, presence: true
+
+  paginates_per 10
 end

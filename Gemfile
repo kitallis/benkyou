@@ -22,6 +22,7 @@ gem "stimulus-rails"
 gem "turbolinks", "~> 5"
 gem "webpacker", "~> 5.0"
 gem "font-awesome-sass"
+gem "kaminari"
 
 group :development, :test do
   gem "standard"

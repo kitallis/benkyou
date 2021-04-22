@@ -14,7 +14,7 @@
   </tbody>
 </table>
 
-<% if @deck.cards.exists? %>
+<% if @cards.exists? %>
   <table class="table">
     <thead>
     <tr>
@@ -24,7 +24,7 @@
     </thead>
 
     <tbody>
-    <% @deck.cards.each do |card| %>
+    <% @cards.each do |card| %>
       <tr>
         <td><%= card.front %></td>
         <td><%= card.back %></td>
@@ -37,6 +37,8 @@
     No cards in this deck.
   </p>
 <% end %>
+
+<%= paginate @cards %>
 
 <%= link_to "New Card", new_deck_card_path(@deck), class: "button is-black" %>
 <%= link_to 'Edit Deck', edit_deck_path(@deck), class: "button is-light" %>

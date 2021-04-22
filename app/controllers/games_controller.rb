@@ -3,7 +3,10 @@ class GamesController < ApplicationController
   before_action :set_play, only: %i[show play]
 
   def index
-    @games = Game.includes(:plays).where(plays: {user: current_user})
+    @games = Game
+               .includes(:plays)
+               .where(plays: {user: current_user})
+               .page(params[:page])
     @other_games = Game.where.not(status: :stopped).where.not(id: @games).limit(10)
   end
 
