@@ -1,6 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<h1 class="title">Decks</h1>
+<h2 class="title is-2">Decks</h2>
 
 <table class="table">
   <thead>
@@ -21,9 +19,9 @@
     </tr>
   <% end %>
   </tbody>
+  <%= paginate @decks %>
 </table>
 
-<%= paginate @decks %>
 
 <%= link_to 'New Deck', new_deck_path, class: "button is-black" %>
 

@@ -15,12 +15,13 @@ class Deck < ApplicationRecord
 
   paginates_per 10
 
-  def with_import!(file)
-    options = { content: file.read(encoding: "SJIS:UTF-8"), encoding: "SJIS:UTF-8" }
+  def with_import!(file_content)
+    options = { content: file_content, encoding: "SJIS:UTF-8" }
+    this = self
 
     importer = Importers::Card.new(options) do
       after_build do |card|
-        card.deck = self
+        card.deck = this
       end
     end
 

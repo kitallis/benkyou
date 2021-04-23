@@ -51,13 +51,13 @@ class Game < ApplicationRecord
 
   def at_least_one_player?
     if plays.empty?
-      errors.add(:plays, "need at least one player")
+      errors.add(:plays, "- need at least one player")
     end
   end
 
   def at_least_one_game_deck?
     if game_decks.empty?
-      errors.add(:game_decks, "attach at least 1 game deck")
+      errors.add(:game_decks, "- attach at least 1")
     end
   end
 end

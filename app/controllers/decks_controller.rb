@@ -58,9 +58,10 @@ class DecksController < ApplicationController
     validate_file_type
     validate_file_size
 
+    @file_content = read_csv_file(@file)
     return render :show, status: :bad_request if @errors.present?
 
-    @deck.with_import!(@file) do |importer|
+    @deck.with_import!(@file_content) do |importer|
       if importer.report.success?
         redirect_to @deck, notice: importer.report.message
       else

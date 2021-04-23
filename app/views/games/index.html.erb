@@ -1,5 +1,5 @@
 <div class="block">
-  <h1 class="title">Your games</h1>
+  <h2 class="title is-2">Your games</h2>
 
   <% if @games.exists? %>
     <table class="table">
@@ -20,14 +20,14 @@
         </tr>
       <% end %>
       </tbody>
+
+      <%= paginate @games %>
     </table>
   <% else %>
     <p class="block">
       You don't have any games right now.
     </p>
   <% end %>
-
-  <%= paginate @games %>
 
   <br/>
 
@@ -37,7 +37,7 @@
 <br/>
 
 <div class="block">
-  <h1 class="title">Other active games</h1>
+  <h2 class="title is-2">Other active games</h2>
 
   <% if @other_games.exists? %>
     <table class="table">

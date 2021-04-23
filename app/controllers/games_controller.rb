@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  include ApplicationHelper
+
   before_action :set_game, only: %i[show play start]
   before_action :set_play, only: %i[show play]
 
@@ -28,6 +30,7 @@ class GamesController < ApplicationController
         format.html { redirect_to @game, notice: "Game was successfully created." }
         format.json { render :show, status: :created, location: @game }
       else
+        flash_message "alert", @game.errors.full_messages.to_sentence
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end

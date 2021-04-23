@@ -3,6 +3,11 @@ module FileImportable
 
   VALID_MIME_TYPES = %w[text/csv].freeze
 
+  def read_csv_file(file)
+    return unless file.content_type == "text/csv"
+    File.read(file, encoding: "UTF-8")
+  end
+
   def initialize_import
     @errors = []
     @file = params.require(:file)

@@ -1,3 +1,4 @@
+<h2 class="title is-2">Deck</h2>
 <table class="table">
   <thead>
   <tr>
@@ -14,6 +15,7 @@
   </tbody>
 </table>
 
+<h2 class="title">Cards</h2>
 <% if @cards.exists? %>
   <table class="table">
     <thead>
@@ -31,14 +33,13 @@
       </tr>
     <% end %>
     </tbody>
+    <%= paginate @cards %>
   </table>
 <% else %>
   <p class="block">
     No cards in this deck.
   </p>
 <% end %>
-
-<%= paginate @cards %>
 
 <div class="block">
   <%= link_to "New Card", new_deck_card_path(@deck), class: "button is-black" %>
