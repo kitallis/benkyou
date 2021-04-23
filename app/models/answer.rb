@@ -13,10 +13,10 @@ class Answer < ApplicationRecord
   end
 
   def correct?
-    card.back.eql?(sanitize_attempt)
+    sanitize(card.back).eql?(sanitize(attempt))
   end
 
-  def sanitize_attempt
-    attempt.downcase.squish
+  def sanitize(word)
+    word.downcase.squish
   end
 end
